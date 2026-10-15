@@ -53,14 +53,8 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 
 ***
 
-# Post install
 
-> [!NOTE]
-> **You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.**
-
-You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https://docs.fedoraproject.org/en-US/fedora-silverblue/_attachments/silverblue-cheatsheet.pdf).
-
-## Note/Disclaimer
+# Note/Disclaimer
 
 > [!IMPORTANT]
 > I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
@@ -69,6 +63,11 @@ You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https:/
 
 > [!WARNING]
 > **NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.**
+
+> [!NOTE]
+> **You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.**
+
+You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https://docs.fedoraproject.org/en-US/fedora-silverblue/_attachments/silverblue-cheatsheet.pdf).
 
 ***
 
