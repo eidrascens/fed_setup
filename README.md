@@ -492,6 +492,38 @@ Later on, before rebasing this needs to be included back, which can be done with
 
 # Laptop Users
 
+## Set `intel_pstate=passive` for Improved Battery Life
+
+For users with Sandy Bridge and later CPU (for Intel, [docs](https://www.kernel.org/doc/html/v4.19/admin-guide/pm/intel_pstate.html)) (for AMD, refer to Kernel document on [`amd_pstate`](https://docs.kernel.org/admin-guide/pm/amd-pstate.html)).
+
+> intel_pstate is a part of the CPU performance scaling subsystem in the Linux kernel.
+
+By default, `intel_pstate` is in "Active Mode" (`intel_pstate=active`):
+
+> the driver bypasses the scaling governors layer of CPUFreq and provides its own scaling algorithms for P-state selection
+
+Meanwhile, `intel_pstate=passive`:
+
+> If the driver works in this mode, the scaling_driver policy attribute in sysfs for all CPUFreq policies contains the string `intel_cpufreq`. Then, the driver behaves like a regular CPUFreq scaling driver. That is, it is invoked by generic scaling governors when necessary to talk to the hardware in order to change the P-state of a CPU (in particular, the schedutil governor can invoke it directly from scheduler context).
+
+This can be achieved by appending `intel_pstate=passive` to the Kernel arguments using `rpm-ostree kargs`:
+
+```bash
+rpm-ostree kargs --append-if-missing=intel_pstate=passive
+```
+
+### Checking Battery Consumption
+
+There are several tools that can be installed to check the power consumption on your machine. However, for those who does not like to layer additional software like me:
+
+```bash
+awk \'{print $1*1e-6 " W"}\' /sys/class/power_supply/BAT0/power_now
+```
+
+
+
+This reads `/sys/class/power_supply/BAT0/power_now` and converts it to Watts (W). In case of Lunar Lake, one can achieve power consumption to as low as 3.4 W.
+
 ## Battery Threshold
 
 I recommend setting battery threshold of at least 80% to decrease wear on the battery. This can be done by echoing the threshold to `/sys/class/power_supply/BAT0/charge_control_end_threshold`. However, this resets every reboot, so it is good idea to make a systemd service for it:
