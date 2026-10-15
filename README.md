@@ -100,10 +100,11 @@ flatpak update
 It is also !important to update your firmware using `fwupdmgr`:
 
 ```bash
-fwupdmgr refresh --force
-fwupdmgr get-devices
-fwupdmgr get-updates
-fwupdmgr update
+sudo fwupdmgr refresh --force
+# get-devices need to have your device connected to AC
+sudo fwupdmgr get-devices
+sudo fwupdmgr get-updates
+sudo fwupdmgr update
 ```
 
 Reboot. You can also reboot later on.
