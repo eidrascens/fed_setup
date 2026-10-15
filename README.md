@@ -66,9 +66,11 @@ You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https:/
 
 > [!IMPORTANT]
 > I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
+>
+> Lastly, the command must be first analyzed and given a thought before execution.
 
-> [!IMPORTANT]
-> Lastly, the command must be first analyzed and given a thought before execution. **NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.**
+> [!WARNING]
+> **NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.**
 
 ***
 
