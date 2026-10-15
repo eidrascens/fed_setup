@@ -4,54 +4,54 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 
 - [System Update](#system-update)
 - [Mount External Drives](#mount-external-drives)
-    - [Automatically Mount](#automatically-mount)
+  - [Automatically Mount](#automatically-mount)
 - [Third Party Repos, Drivers, Codecs](#install-rpm-fusion-and-other-repos)
-    - [Flatpak](#flatpak)
-    - [RPMFusion](#rpmfusion)
-    - [Unused Repos](#unused-repos)
-    - [Codecs](#codecs)
-        - [Thumbnail Support](#thumbnail-support)
-        - [Openh264](#openh264)
-        - [GStreamer](#gstreamer)
-    - [NVidia](#nvidia-drivers)
-    - [Reinstall RPMFusion](#reinstall-rpmfusion)
+  - [Flatpak](#flatpak)
+  - [RPMFusion](#rpmfusion)
+  - [Unused Repos](#unused-repos)
+  - [Codecs](#codecs)
+    - [Thumbnail Support](#thumbnail-support)
+    - [Openh264](#openh264)
+    - [GStreamer](#gstreamer)
+  - [NVidia](#nvidia-drivers)
+  - [Reinstall RPMFusion](#reinstall-rpmfusion)
 - [Flatpak Modifications](#flatpak-modifications)
-    - [Theming](#theming)
-    - [Permissions](#permissions)
-    - [Theming Extended](#theming-extended)
+  - [Theming](#theming)
+  - [Permissions](#permissions)
+  - [Theming Extended](#theming-extended)
 - [System Optimizations](#system-optimizations)
     <!--todo: - [Disable Fedora flatpak repo] -->
     <!--todo: - [Reinstall flatpak apps] -->
     <!--todo: - [Replace Firefox RPM with Firefox Flatpak] -->
     <!--todo: - [Set Firefox to use wayland] -->
     <!--todo: - [Firefox `about:config` Improvements] -->
-    - [Disable `NetworkManager-wait-online.service`](#disable-networkmanager-wait-onlineservice)
-    - [Unnecessary Flatpaks](#unnecessary-flatpaks)
-    - [Removing GNOME Software](#disable-gnome-software)
-    - [SSD Related Optimizations](#ssd-related-optimizations)
-        - [Disable Workqueues](#disable-workqeues)
-        - [Enable Discard](#enable-discard)
-        - [Change to `noatime`](#change-to-noatime)
+  - [Disable `NetworkManager-wait-online.service`](#disable-networkmanager-wait-onlineservice)
+  - [Unnecessary Flatpaks](#unnecessary-flatpaks)
+  - [Removing GNOME Software](#disable-gnome-software)
+  - [SSD Related Optimizations](#ssd-related-optimizations)
+    - [Disable Workqueues](#disable-workqeues)
+    - [Enable Discard](#enable-discard)
+    - [Change to `noatime`](#change-to-noatime)
     <!--todo: - [BTRFS maintenance] -->
     <!--todo: - [Toolbox delays] -->
-    - [Removable Base Image Packages](#removable-base-image-packages)
+  - [Removable Base Image Packages](#removable-base-image-packages)
 - [Laptop Users](#laptop-users)
-    - [Battery Threshold](#set-battery-threshold)
-    - [Keyboard Backlight](#keyboard-backlight)
-    - [Deep Sleep](#deep-sleep)
+  - [Battery Threshold](#set-battery-threshold)
+  - [Keyboard Backlight](#keyboard-backlight)
+  - [Deep Sleep](#deep-sleep)
 - [Customizations](#customizations)
-    - [Use FISH](#use-fish)
-        - [Install FISH](#install-fish)
-        - [Default Shell](#default-shell)
-        - [Customize FISH](#customize-fish)
+  - [Use FISH](#use-fish)
+    - [Install FISH](#install-fish)
+    - [Default Shell](#default-shell)
+    - [Customize FISH](#customize-fish)
 - [Tips and Tricks](#tips-and-tricks)
-    - [Compare and Contrast](#contrast-and-contrast)
+  - [Compare and Contrast](#contrast-and-contrast)
 - [Miscellaneous](#miscellaneous)
-    - [VSCode](#vscode)
-        - [Install](#install)
-            - [Toolbox](#toolbox-installation)
-            - [Layering](#layering)
-        - [Block Telemetry](#block-telemetry)
+  - [VSCode](#vscode)
+    - [Install](#install)
+      - [Toolbox](#toolbox-installation)
+      - [Layering](#layering)
+    - [Block Telemetry](#block-telemetry)
 
 ***
 
@@ -142,7 +142,7 @@ Below is an example, **DO NOT COPY AND PASTE**:
 # UUID                                      # mount point (full), also  # filesystem format   # options # dump # fsck
 #                                           # no env variables such as
 #                                           # $HOME
-# UUID=e423cfe8-5e8a-419c-87d0-8abb39aa498c /var/home/iaacornus/Storage	ext4	              defaults	0       0
+# UUID=e423cfe8-5e8a-419c-87d0-8abb39aa498c /var/home/iaacornus/Storage ext4               defaults 0       0
 # UUID=<your device uuid>                   <mount point>               <filesystem format> <options> <dump>  <fsck>
 ```
 
@@ -250,7 +250,7 @@ Finally, check your NVidia install with `modinfo -F version nvidia`, it should g
 
 ## Reinstall RPMFusion
 
-The current RPMFusion installed by the command was version-specific as notable by `$(rpm -E %fedora)` in the command. Thus, rebasing for the next release would be a [problem](https://discussion.fedoraproject.org/t/simplifying-updates-for-rpm-fusion-packages-and-other-packages-shipping-their-own-rpm-repos/30364/23). Fortunately, it can be fixed by installing a "*general*" repo:
+The current RPMFusion installed by the command was version-specific as notable by `$(rpm -E %fedora)` in the command. Thus, rebasing for the next release would be a [problem](https://discussion.fedoraproject.org/t/simplifying-updates-for-rpm-fusion-packages-and-other-packages-shipping-their-own-rpm-repos/30364/23). Fortunately, it can be fixed by installing a "_general_" repo:
 
 ```
 rpm-ostree update --uninstall rpmfusion-free-release --uninstall rpmfusion-nonfree-release --install rpmfusion-free-release --install rpmfusion-nonfree-release
@@ -295,7 +295,6 @@ flatpak override --user --nofilesystem=host
 ```
 
 The overriden directories can be returned with when required with `flatpak override --filesystem=home` or `host`.
-
 
 [Flatseal](https://github.com/tchx84/flatseal) is also a good utility for managing permissions as [u/GunnarRoxen](https://www.reddit.com/user/GunnarRoxen/) suggested. It can be installed with:
 
@@ -452,7 +451,7 @@ sudo cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue --persistent 
 Finally, reboot. This can be verified with `sudo cryptsetup luksDump /dev/<DEV> | grep Flags` whereas it should return something like:
 
 ```
-Flags:       	no-read-workqueue no-write-workqueue
+Flags:        no-read-workqueue no-write-workqueue
 ```
 
 ### Enable Discard
@@ -550,6 +549,7 @@ Do a reboot, then check it with `cat /sys/power/mem_sleep`, where the `deep` sho
 > Fish (friendly interactive shell) is a smart and user-friendly command line shell that works on Linux, MacOS, and other operating systems. Use it for everyday work in your terminal and for scripting. Scripts written in fish are less cryptic than their equivalent bash versions.
 
 FISH (Friendly Interactive SHell) is an alternative for BASH (Bourne Again SHell) and ZSH (Z SHell) which comes with out-of-the-box useful features such as:
+
 - Syntax highlighting
 - Web based configuration
 - Inline searchable history
@@ -561,6 +561,7 @@ DEMO (Credits to Sid Mohanty, [link to original article, suggested read for more
 ![](https://miro.medium.com/max/640/1*AhoFOHQxoLzKiLMg-NVRKQ.gif)
 
 FOR INTERESTED:
+
 - [https://opensource.com/article/20/3/fish-shell](https://opensource.com/article/20/3/fish-shell)
 - [https://fedoramagazine.org/fish-a-friendly-interactive-shell/](https://fedoramagazine.org/fish-a-friendly-interactive-shell/)
 
@@ -688,11 +689,11 @@ Then refresh the metadata with `rpm-ostree refresh-md`, and do `rpm-ostree insta
 VSCode contains telemetry, to block some of them block some of the domain in your `/etc/hosts` by setting it to loopback (`127.0.0.1`) by appending:
 
 ```
-127.0.0.1	dc.services.visualstudio.com
-127.0.0.1	dc.trafficmanager.net
-127.0.0.1	vortex.data.microsoft.com
-127.0.0.1	weu-breeziest-in.cloudapp.net
-127.0.0.1	mobile.events.data.microsoft.com
+127.0.0.1 dc.services.visualstudio.com
+127.0.0.1 dc.trafficmanager.net
+127.0.0.1 vortex.data.microsoft.com
+127.0.0.1 weu-breeziest-in.cloudapp.net
+127.0.0.1 mobile.events.data.microsoft.com
 ```
 
 Then in `$HOME/.config/Code/User/settings.json`, include:
