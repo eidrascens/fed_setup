@@ -108,7 +108,7 @@ fwupdmgr get-updates
 fwupdmgr update
 ```
 
-Reboot.
+Reboot. You can also reboot later on.
 
 ***
 
@@ -116,19 +116,20 @@ Reboot.
 
 Some of the external drives will not be automatically mounted by the system if it was not mounted/specified during the installation.
 
-External drives, along with its `UUID` (Universally Unique Identified), can be found using `lsblk` or `fdisk -l` and be mounted using:
+External drives, along with its `UUID` (Universally Unique Identifier), can be found using `fdisk -l` and be mounted using:
 
 ```bash
 sudo mount /dev/sdX <dir>
 # replace <dir> where you want to mount the drive
-# sdx can be nvmeNnJpI where N, J and I are integers e.g. /dev/nvme0n1p1, they can also be /dev/sdb
+# sdx can be nvmeNnJpI where N, J and I are integers
+# e.g. /dev/nvme0n1p1, they can also be /dev/sdb
 ```
 
 ## Automatically Mount
 
-External drives can be automatically mounted on boot by including it into `/etc/fstab`. The `UUID` of the drive and its mount point is needed.
+External drives can be automatically mounted on boot by including it into `/etc/fstab`.
 
-Firstly, the drives is recommended to be mounted. List the drives and their `UUID` with `lsblk -f`. Then, add it to `/etc/fstab` with format of:
+Firstly, you need to obtain the `UUID` of the drive and make sure its mount point exists. You can find the drives and their corresponding `UUID` with `lsblk -f` or `fdisk -l`. Then, add it to `/etc/fstab` with format of:
 
 ```bash
 UUID    mount_point     type    options     dump    fsck
@@ -197,7 +198,7 @@ Although you may want to enable `fedora-cisco-openh264`.
 
 ### Thumbnail Support
 
-Unfortunately, perhaps due to legal/patent reasons, `ffmpeg` is not included by default. Currently, as the time of this writing, `ffmpeg` conflicts with several free alternatives. Thus, to install `ffmpeg`, which is needed for `.mp4` thumbnail support, you need to override some base image packages:
+Unfortunately, perhaps due to legal/patent reasons, `ffmpeg` is not included by default. Currently, as the time of this writing, `ffmpeg` conflicts with several free alternatives. Thus, to install `ffmpeg`, which is needed for `.mp4` thumbnail support and other things, you need to override some base image packages:
 
 ```bash
 rpm-ostree override remove libavdevice-free libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free ffmpeg-free --install ffmpeg --uninstall libavcodec-freeworld
@@ -217,7 +218,7 @@ You can install the packages `mozilla-openh264` and `gstreamer1-plugin-openh264`
 rpm-ostree install mozilla-openh264 gstreamer1-plugin-openh264
 ```
 
-However, `mozilla-openh264` may give a bad performance some times, depending on the setup. As an alternative, [u/DelusionalSocialist](https://www.reddit.com/user/DelusionalSocialist/), suggested to use `ffmpeg-libs` which can solve the problem. `ffmpeg-libs` comes from the nonfree repo and can be installed with `rpm-ostree`.
+It is important to note that `mozilla-openh264` may give a bad performance, depending on the setup. As an alternative, [u/DelusionalSocialist](https://www.reddit.com/user/DelusionalSocialist/), suggested to use `ffmpeg-libs` which can solve the problem. `ffmpeg-libs` comes from the nonfree repo and can be installed with `rpm-ostree`.
 
 ### GStreamer
 
@@ -249,7 +250,7 @@ Finally, check your NVidia install with `modinfo -F version nvidia`, it should g
 
 ## Reinstall RPMFusion
 
-The current RPMFusion installed by the command was version-specific as notable by `$(rpm -E %fedora)` in the command. Thus, rebasing for the next release would be a [problem](https://discussion.fedoraproject.org/t/simplifying-updates-for-rpm-fusion-packages-and-other-packages-shipping-their-own-rpm-repos/30364/23). Fortunately, it can be fixed by installing a "general" repo:
+The current RPMFusion installed by the command was version-specific as notable by `$(rpm -E %fedora)` in the command. Thus, rebasing for the next release would be a [problem](https://discussion.fedoraproject.org/t/simplifying-updates-for-rpm-fusion-packages-and-other-packages-shipping-their-own-rpm-repos/30364/23). Fortunately, it can be fixed by installing a "*general*" repo:
 
 ```
 rpm-ostree update --uninstall rpmfusion-free-release --uninstall rpmfusion-nonfree-release --install rpmfusion-free-release --install rpmfusion-nonfree-release
@@ -263,8 +264,7 @@ Flatpak apps are sandboxed. Thus, may not work as expected. The following are so
 
 ## Theming
 
-Due to the aforementioned sandboxing, there are 2 methods to installing themes:
-Either the flatpak version of GTK theme you are using as a flatpak, which you can find by using `search`:
+There are 2 methods to installing themes: Either the flatpak version of GTK theme you are using as a flatpak, which you can find by using `search`:
 
 ```bash
 flatpak search gtk3
@@ -287,41 +287,46 @@ sudo flatpak override --system --filesystem=xdg-data/themes
 
 ## Permissions
 
-Other reddit users suggested, such as [u/IceOleg](https://www.reddit.com/user/IceOleg/), you can remove permissions for access to `home` and `host` dir with:
+Other reddit users suggested, such as [u/IceOleg](https://www.reddit.com/user/IceOleg/), you can remove permissions for access to `$HOME` and `host` dir with:
 
 ```bash
 flatpak override --user --nofilesystem=home
 flatpak override --user --nofilesystem=host
 ```
 
-The overriden directories can be returned with when required. [Flatseal](https://github.com/tchx84/flatseal) is also a good utility for managing permissions as [u/GunnarRoxen](https://www.reddit.com/user/GunnarRoxen/) suggested. It can be installed with:
+The overriden directories can be returned with when required with `flatpak override --filesystem=home` or `host`.
+
+
+[Flatseal](https://github.com/tchx84/flatseal) is also a good utility for managing permissions as [u/GunnarRoxen](https://www.reddit.com/user/GunnarRoxen/) suggested. It can be installed with:
 
 ```bash
 flatpak install flathub com.github.tchx84.Flatseal
 ```
 
-The flatpak modifications made can be reset with
+The flatpak modifications can be reset with
 
 ```bash
 sudo flatpak override --system --reset
 ```
 
-The `--system` flag can also be omitted, and `--user` can be used for user-wide changes.
+The `--system` flag can also be omitted and `--user` can be used for user-wide changes.
 
 ## Theming Extended
 
 In some cases, where themes do not apply, especially in GTK4, it can be forced by including it in `$HOME/.profile`, as well as the settings (`settings.ini`):
 
-**Do not copy and execute the command, replace `<theme-name>` with the name of the theme**
+> [!WARNING]
+> Do not copy and execute the command, replace `<theme-name>` with the name of the theme
 
 ```
-echo "export GTK_THEME=<theme-name>" >> $HOME/.profile; if [ ! -d $HOME/.config/environment.d/ ]; then mkdir -p $HOME/.config/environment.d/; fi; echo "GTK_THEME=<theme-name>" >> $HOME/.config/environment.d/gtk_theme.conf; echo "GTK_THEME=<theme-name>" >> $HOME/.config/gtk-4.0/settings.ini
+echo "export GTK_THEME=<theme-name>" >> $HOME/.profile;                         \
+if [ ! -d $HOME/.config/environment.d/ ];                                       \
+then mkdir -p $HOME/.config/environment.d/; fi;                                 \
+echo "GTK_THEME=<theme-name>" >> $HOME/.config/environment.d/gtk_theme.conf;    \
+echo "GTK_THEME=<theme-name>" >> $HOME/.config/gtk-4.0/settings.ini
 ```
 
-Which does (explanation):
-
-1. `echo "export GTK_THEME=<theme-name>" >> $HOME/.profile`: append `export GTK_THEME=<theme-name>` to `$HOME/.profile`
-2. Create `$HOME/.config/environment.d/gtk_theme.conf` file:
+This does the following: `echo "export GTK_THEME=<theme-name>" >> $HOME/.profile` append `export GTK_THEME=<theme-name>` to `$HOME/.profile`; create `$HOME/.config/environment.d/gtk_theme.conf` file with:
 
 ```bash
 if [ ! -d $HOME/.config/environment.d/ ]; then
@@ -331,11 +336,7 @@ fi
 echo "GTK_THEME=<theme-name>" >> $HOME/.config/environment.d/gtk_theme.conf
 ```
 
-And append `GTK_THEME=<theme-name>` at the end of the `gtk_theme.conf`
-
-3. And finally append `GTK_THEME=<theme-name>` to `settings.ini` config.
-
-If this didn't sufficed, then, you can try:
+And append `GTK_THEME=<theme-name>` at the end of the `gtk_theme.conf`; append `GTK_THEME=<theme-name>` to `settings.ini` config. If this didn't suffice, then, you can try:
 
 ```bash
 sudo flatpak override --system --env=GTK_THEME='<theme-name>'
@@ -347,11 +348,11 @@ sudo flatpak override --system --env=GTK_THEME='<theme-name>'
 
 ## Disable `NetworkManager-wait-online.service`
 
-You can also disable `NetworkManager-wait-online.service`. It is simply a ["service simply waits, doing absolutely nothing, until the network is connected, and when this happens, it changes its state so that other services that depend on the network can be launched to start doing their thing."](https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do/1133545#1133545)
-
 > In some multi-user environments part of the boot-up process can come from the network. For this case `systemd` defaults to waiting for the network to come on-line before certain steps are taken.
 
-Disabling it can decrease the boot time of at least ~15s-20s:
+You can also disable `NetworkManager-wait-online.service`. It is simply a ["service simply waits, doing absolutely nothing, until the network is connected, and when this happens, it changes its state so that other services that depend on the network can be launched to start doing their thing."](https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do/1133545#1133545)
+
+Disabling it can decrease the boot time of at least ~15s-20s, anecdotally:
 
 ```bash
 sudo systemctl disable NetworkManager-wait-online.service
@@ -377,15 +378,17 @@ Here are some you can remove:
 2. Calendar `org.gnome.Calendar`
 3. Connections `org.gnome.Connections`
 4. Contacts `org.gnome.Contacts`
-5. PDF reader `org.gnome.Evince` if you plan to install another pdf reader
+5. Evince `org.gnome.Evince`
 6. Logs `org.gnome.Logs`
 7. Maps `org.gnome.Maps`
 8. Weather apps `org.gnome.Weather`
 9. Disk usage analyzer `org.gnome.baobab`
 
+<!--todo: # Replace Fedora Flatpaks -->
+
 ## Disable GNOME Software
 
-Gnome Software launches for some reason even tho it is not used, this takes at least 100MB of RAM up to 900MB (as reported anecdotally). You can prevent Gnome Software from autostart by removing `/etc/xdg/autostart/org.gnome.Software.desktop`:
+GNOME Software launches automatically starts up after boot. This takes at least 100MB of RAM up to 900MB (anecdotally). You can prevent GNOME Software from autostart by removing `/etc/xdg/autostart/org.gnome.Software.desktop`:
 
 ```bash
 sudo rm /etc/xdg/autostart/org.gnome.Software.desktop
@@ -393,10 +396,10 @@ sudo rm /etc/xdg/autostart/org.gnome.Software.desktop
 
 ## SSD Related Optimizations
 
-If you will proceed in this part, you need to obtain your device's unique identifier (`UID`). A `UID` is unique in each of your blocks/devices. You can find your partition/block/device's `UID` with `lsblk -p`:
+If you will proceed in this part, you need to obtain your device's unique identifier (`UID`). A `UID` is unique in each of your blocks/devices. You can find your partition/block/device's `UID` with `lsblk -p` or `fdisk -l`:
 
 ```bash
-❯ lsblk -p
+lsblk -p
 NAME                MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 /dev/zram0          252:0    0   7.5G  0 disk  [SWAP]
 /dev/nvme0n1        259:0    0 476.9G  0 disk
@@ -410,8 +413,8 @@ NAME                MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 
 ### Disable Workqueues
 
-> [!CAUTION]
-> There are reported data loss on some and not on others, citing that the code of cloudflare (they implemented it) is buggy. I've tried it myself and so far I didn't experienced any data loss, and I didn't encountered complains about it yet from zen kernel users, since zen kernel disabled it by default. But again, it may not be always the case.
+> [!WARNING]
+> There are reported data loss on some and not on others, citing that the code of CloudFlare is buggy. I've tried it myself for about 2 years now (as of this commit), so far I didn't experienced any data loss. Moreover, I didn't encountered complains about it yet from zen kernel users, since zen kernel disabled it by default. But again, it may not be always the case.
 
 Quoting [Arch Wiki](https://wiki.archlinux.org/title/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance):
 
@@ -428,7 +431,7 @@ sudo dmsetup info luks-<UUID>
 Which should output something like this:
 
 ```bash
-❯ sudo dmsetup info luks-e88105e1-690f-423e-a168-a9f9a2e613e9
+sudo dmsetup info luks-e88105e1-690f-423e-a168-a9f9a2e613e9
 Name:              luks-e88105e1-690f-423e-a168-a9f9a2e613e9
 State:             ACTIVE
 Read Ahead:        256
@@ -446,10 +449,9 @@ Take the name, in this case `luks-e88105e1-690f-423e-a168-a9f9a2e613e9`, and exe
 sudo cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue --persistent refresh <name>
 ```
 
-Finally, reboot. This can be verified with:
+Finally, reboot. This can be verified with `sudo cryptsetup luksDump /dev/<DEV> | grep Flags` whereas it should return something like:
 
-```bash
-❯ sudo cryptsetup luksDump /dev/<DEV> | grep Flags
+```
 Flags:       	no-read-workqueue no-write-workqueue
 ```
 
@@ -548,11 +550,11 @@ Do a reboot, then check it with `cat /sys/power/mem_sleep`, where the `deep` sho
 > Fish (friendly interactive shell) is a smart and user-friendly command line shell that works on Linux, MacOS, and other operating systems. Use it for everyday work in your terminal and for scripting. Scripts written in fish are less cryptic than their equivalent bash versions.
 
 FISH (Friendly Interactive SHell) is an alternative for BASH (Bourne Again SHell) and ZSH (Z SHell) which comes with out-of-the-box useful features such as:
-    - Syntax highlighting
-    - Web based configuration
-    - Inline searchable history
-    - Inline autosuggestion
-    - Tab completion using manpage data
+- Syntax highlighting
+- Web based configuration
+- Inline searchable history
+- Inline autosuggestion
+- Tab completion using manpage data
 
 DEMO (Credits to Sid Mohanty, [link to original article, suggested read for more info](https://betterprogramming.pub/fish-vs-zsh-vs-bash-reasons-why-you-need-to-switch-to-fish-4e63a66687eb?gi=fc345308724e))
 
@@ -574,7 +576,7 @@ You can also install it inside `toolbox`:
 
 ```bash
 sudo dnf install install fish
-# or if inside toolbox
+# or if outside toolbox
 toolbox run sudo dnf install fish
 ```
 
