@@ -52,6 +52,8 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 
 ***
 
+> [!IMPORTANT]
+> Originally, this repository was in `iaacornus/silverblue_postinstall-upgrade`. It was moved here to unify all of my previous and current works under this name
 
 # Note/Disclaimer
 
