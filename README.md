@@ -82,6 +82,9 @@ After booting the system, Gnome Software will automatically download updates of 
 rpm-ostree upgrade --check
 ```
 
+> [!TIP]
+> `rpm-ostree` relies on `polkit`, thus it does not need to be run with `sudo.`
+
 You can obtain the summary of the changes or update, including added, removed and upgraded with
 
 ```bash
