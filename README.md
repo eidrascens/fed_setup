@@ -21,6 +21,7 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
   - [Permissions](#permissions)
   - [Theming Extended](#theming-extended)
 - [System Optimizations](#system-optimizations)
+  - [Replace RPM Firefox with Flatpak](#replace-rpm-firefox-with-flatpak)
   - [Disable `NetworkManager-wait-online.service`](#disable-networkmanager-wait-onlineservice)
   - [Unnecessary Flatpaks](#unnecessary-flatpaks)
   - [Disable GNOME Software](#disable-gnome-software)
@@ -328,6 +329,22 @@ sudo flatpak override --system --env=GTK_THEME='<theme-name>'
 
 # System Optimizations
 
+## Replace RPM Firefox with Flatpak
+
+There are Fedora-specific changes in the source code of softwares deposited in Fedora repositories. One difference is that [Mozilla's Firefox (in Flathub / Flatpak) supports "profile-guided-optimization," whilst the Fedora's version does not](https://x.com/gnomealex/status/1207933145959555072). This apparently causes a loss of 15 - 20% in performance. Note, however, this report was a year ago by the time of this writing (16/10/26).
+
+```bash
+rpm-ostree override remove firefox firefox-langpacks
+flatpak install flathub org.mozilla.firefox
+```
+
+Hereafter, enable Firefox to use Wayland if it does not already do (by Firefox 121, wayland should be the default):
+
+```bash
+sudo flatpak override --socket=wayland org.mozilla.firefox
+sudo flatpak override --env MOZ_ENABLE_WAYLAND=1 org.mozilla.firefox
+```
+    
 ## Disable `NetworkManager-wait-online.service`
 
 > In some multi-user environments part of the boot-up process can come from the network. For this case `systemd` defaults to waiting for the network to come on-line before certain steps are taken.
