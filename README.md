@@ -203,18 +203,6 @@ rpm-ostree override remove libavdevice-free libavcodec-free libavfilter-free lib
 
 Then, install `ffmpegthumbnailer` and `libavcodec-freeworld`.
 
-### `Openh264`
-
-Fedora disable the automatic install of `openh264` by default, for this reason:
-
-> Upstream Firefox versions download and install the OpenH264 plugin by default automatically. Due to it's binary nature, Fedora disables this automatic download.
-
-You can install the packages `mozilla-openh264` and `gstreamer1-plugin-openh264` to support these codecs in Firefox. Finally, inside Firefox, do `CTRL` + `Shift` + `A` to enter Add Ons Manager > Plugins, and enable the OpenH264* plugins.
-
-```bash
-rpm-ostree install mozilla-openh264 gstreamer1-plugin-openh264
-```
-
 It is important to note that `mozilla-openh264` may give a bad performance, depending on the setup. As an alternative, [u/DelusionalSocialist](https://www.reddit.com/user/DelusionalSocialist/), suggested to use `ffmpeg-libs` which can solve the problem. `ffmpeg-libs` comes from the nonfree repo and can be installed with `rpm-ostree`.
 
 ### GStreamer
