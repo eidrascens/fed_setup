@@ -73,7 +73,7 @@ You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https:/
 
 # System Update
 
-After booting the system, Gnome Software will automatically download updates of your system. Hence, running `rpm-ostree upgrade` after boot would only give `stderr`. You can wait and reboot later, though usually Gnome gives notifications after the update. Although you can its status with:
+After booting the system, GNOME Software will automatically download updates of your system. Hence, running `rpm-ostree upgrade` after boot would only give `stderr`. You can wait and reboot later, though usually GNOME gives notifications after the update. Although you can its status with:
 
 ```bash
 rpm-ostree upgrade --check
@@ -90,7 +90,7 @@ rpm-ostree upgrade --check
 rpm-ostree upgrade --preview
 ```
 
-Update your preinstalled flatpaks, this may also not be necessary, since this is automatically updated by Gnome software center, but if you want to be sure, do:
+Update your preinstalled flatpaks, this may also not be necessary, since this is automatically updated by GNOME software center, but if you want to be sure, do:
 
 ```bash
 flatpak update
@@ -477,7 +477,7 @@ sudo sed -i 's/compress=zstd:1/noatime,compress=zstd:1/' /etc/fstab
 > [!IMPORTANT]
 > **This needs to be reset before you can rebase to another version, e.g. 36 -> 37, refer [here](https://github.com/fedora-silverblue/issue-tracker/issues/288)**
 
-[u/VVine6](https://www.reddit.com/user/VVine6/) recommended some packages that can be removed from the base image, such as VM host support and Gnome classic shell:
+[u/VVine6](https://www.reddit.com/user/VVine6/) recommended some packages that can be removed from the base image, such as VM host support and GNOME classic shell:
 
 ```bash
 rpm-ostree override remove open-vm-tools-desktop open-vm-tools qemu-guest-agent spice-vdagent spice-webdavd virtualbox-guest-additions gnome-shell-extension-apps-menu gnome-classic-session gnome-shell-extension-window-list gnome-shell-extension-background-logo gnome-shell-extension-launch-new-instance gnome-shell-extension-places-menu
