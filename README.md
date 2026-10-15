@@ -20,11 +20,11 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
     - [Permissions](#permissions)
     - [Theming Extended](#theming-extended)
 - [System Optimizations](#system-optimizations)
-    <!--- TODO: - [Disable Fedora flatpak repo]
-        - [Reinstall flatpak apps]
-    - [Replace Firefox RPM with Firefox Flatpak]
-        - [Set Firefox to use wayland]
-        - [Firefox `about:config` Improvements] -->
+    <!--todo: - [Disable Fedora flatpak repo] -->
+        <!--todo: - [Reinstall flatpak apps] -->
+    <!--todo: - [Replace Firefox RPM with Firefox Flatpak] -->
+        <!--todo: - [Set Firefox to use wayland] -->
+        <!--todo: - [Firefox `about:config` Improvements] -->
     - [Disable `NetworkManager-wait-online.service`](#disable-networkmanager-wait-onlineservice)
     - [Unnecessary Flatpaks](#unnecessary-flatpaks)
     - [Removing GNOME Software](#disable-gnome-software)
@@ -32,8 +32,8 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
         - [Disable Workqueues](#disable-workqeues)
         - [Enable Discard](#enable-discard)
         - [Change to `noatime`](#change-to-noatime)
-    <!--- TODO: - [BTRFS maintenance]
-    - [Toolbox delays] -->
+    <!--todo: - [BTRFS maintenance] -->
+    <!--todo: - [Toolbox delays] -->
     - [Removable Base Image Packages](#removable-base-image-packages)
 - [Laptop Users](#laptop-users)
     - [Battery Threshold](#set-battery-threshold)
