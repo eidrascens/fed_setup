@@ -347,7 +347,7 @@ Hereafter, enable Firefox to use Wayland if it does not already do (by Firefox 1
 sudo flatpak override --socket=wayland org.mozilla.firefox
 sudo flatpak override --env MOZ_ENABLE_WAYLAND=1 org.mozilla.firefox
 ```
-    
+
 ## Disable `NetworkManager-wait-online.service`
 
 > In some multi-user environments part of the boot-up process can come from the network. For this case `systemd` defaults to waiting for the network to come on-line before certain steps are taken.
@@ -465,7 +465,11 @@ Flags:        no-read-workqueue no-write-workqueue
 In Fedora Silverblue, the `crypttab` (`/etc/crypttab`) is not passed into the `intramfs` images. But you can enable discard by passing it as kernel arguments using `rpm-ostree kargs --append`:
 
 ```bash
-rpm-ostree kargs --append=rd.luks.options=UID=discard
+# this enables discard for all
+rpm-ostree kargs --append=rd.luks.options=discard
+# for specific
+```bash
+rpm-ostree kargs --append=rd.luks.options=<LUKS-UUID>=discard
 ```
 
 ### Change to `noatime`
@@ -522,8 +526,6 @@ There are several tools that can be installed to check the power consumption on 
 ```bash
 awk \'{print $1*1e-6 " W"}\' /sys/class/power_supply/BAT0/power_now
 ```
-
-
 
 This reads `/sys/class/power_supply/BAT0/power_now` and converts it to Watts (W). In case of Lunar Lake, one can achieve power consumption to as low as 3.4 W.
 
