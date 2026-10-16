@@ -1,9 +1,9 @@
-# silverblue-postinstall_upgrade
+# Fedora Silverblue Setup and Optimizations
 
 Post install/upgrade recommendations and suggestions for Fedora Silverblue or `ostree` based Fedora (such as Kinoite). Contents, skip to what you need:
 
-- [silverblue-postinstall\_upgrade](#silverblue-postinstall_upgrade)
-- [Note/Disclaimer](#notedisclaimer)
+- [Fedora Silverblue Setup and Optimizations](#fedora-silverblue-setup-and-optimizations)
+- [Note/ Disclaimer](#note-disclaimer)
 - [System Update](#system-update)
 - [Mount External Drives](#mount-external-drives)
   - [Automatically Mount](#automatically-mount)
@@ -55,7 +55,7 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 > [!IMPORTANT]
 > Originally, this repository was in `iaacornus/silverblue_postinstall-upgrade`. It was moved here to unify all of my previous and current works under this name
 
-# Note/Disclaimer
+# Note/ Disclaimer
 
 > [!IMPORTANT]
 > I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
