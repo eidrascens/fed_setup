@@ -462,14 +462,14 @@ Flags:        no-read-workqueue no-write-workqueue
 > [!NOTE]
 > Due to [security implications](https://asalor.blogspot.com/2011/08/trim-dm-crypt-problems.html), `discard` option is not enabled by default. However, for majority it should not be significant. Thus, the performance improvement(s) outweight(s) the security concern(s).
 
-In Fedora Silverblue, the `crypttab` (`/etc/crypttab`) is not passed into the `intramfs` images. But you can enable discard by passing it as kernel arguments using `rpm-ostree kargs --append`:
+In Fedora Silverblue, the `crypttab` (`/etc/crypttab`) is not passed into the `intramfs` images. But you can enable discard by passing it as kernel arguments using `rpm-ostree kargs --append-if-missing`:
 
 ```bash
 # this enables discard for all
-rpm-ostree kargs --append=rd.luks.options=discard
+rpm-ostree kargs --append-if-missing=rd.luks.options=discard
 # for specific
-```bash
-rpm-ostree kargs --append=rd.luks.options=<LUKS-UUID>=discard
+```bashq
+rpm-ostree kargs --append-if-missing=rd.luks.options=<LUKS-UUID>=discard
 ```
 
 ### Change to `noatime`
@@ -572,7 +572,7 @@ brightnessctl --device='asus::kbd_backlight' set 3
 In some laptop, the battery drains rapidly when suspended under `s2idle`, particularly those with Alder Lake CPUs. One of the workaround is setting the kernel parameters with `mem_sleep_default=deep`. This can be done via `grubby`:
 
 ```bash
-rpm-ostree kargs --append="mem_sleep_default=deep
+rpm-ostree kargs --append-if-missing="mem_sleep_default=deep
 ```
 
 Do a reboot, then check it with `cat /sys/power/mem_sleep`, where the `deep` should be enclosed with brackets (`[deep]`).
