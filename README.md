@@ -662,13 +662,11 @@ Instead of using `<device>`, it is highly recommended to use the `UUID` instead.
 
 Finally, check `/etc/fstab` with `cat /etc/fstab`. Be sure to input the correct UUID and options, otherwise your system won't boot.
 
-## VSCode
+## Install VSCode
 
 There are three ways to install via flatpak, toolbox or layering.
 
-### Install
-
-#### Toolbox
+### Toolbox
 
 **This section assumes that you will use Fedora as toolbox container**
 
@@ -708,7 +706,7 @@ Terminal=false
 
 If you used a toolbox with different name, change `Exec` to `toolbox --container <name-of-toolbox> run code`.
 
-#### Layering
+### Layering
 
 Since the filesystem is immutable, you cannot import the GPG, unless you do specific changes which is not covered here. Thus, simply create a repository for code:
 
@@ -718,7 +716,7 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 
 Then refresh the metadata with `rpm-ostree refresh-md`, and do `rpm-ostree install code`.
 
-## Block Telemetry
+### Block Telemetry
 
 VSCode contains telemetry, to block some of them block some of the domain in your `/etc/hosts` by setting it to loopback (`127.0.0.1`) by appending:
 
