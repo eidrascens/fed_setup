@@ -642,23 +642,7 @@ set -U fish_greeting
 
 ***
 
-# Tips and Tricks
 
-## Compare and Contrast
-
-This can be helpful in debugging as suggested by [u/VVine6](https://www.reddit.com/user/VVine6/)
-
-```bash
-sudo ostree admin config-diff | sort | grep -v system.control
-```
-
-> The output will list files as Removed, Added or Modified. The defaults are available in `/usr/etc` in the very same path, so to revert a modification or a removal simple copy the file over.
-
-You can also utilize `diff` to obtain a more elaborate report:
-
-```bash
-sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/null
-```
 
 ***
 
@@ -772,4 +756,20 @@ Then in `$HOME/.config/Code/User/settings.json`, include:
 
 ```
 "telemetry.telemetryLevel": "off"
+# Tips and Tricks
+
+## Compare and Contrast
+
+This can be helpful in debugging as suggested by [u/VVine6](https://www.reddit.com/user/VVine6/)
+
+```bash
+sudo ostree admin config-diff | sort | grep -v system.control
+```
+
+> The output will list files as Removed, Added or Modified. The defaults are available in `/usr/etc` in the very same path, so to revert a modification or a removal simple copy the file over.
+
+You can also utilize `diff` to obtain a more elaborate report:
+
+```bash
+sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/null
 ```
