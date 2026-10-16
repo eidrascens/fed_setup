@@ -1,9 +1,32 @@
 # Fedora Silverblue Setup and Optimizations
 
-Post install/upgrade recommendations and suggestions for Fedora Silverblue or `ostree` based Fedora (such as Kinoite). Contents, skip to what you need:
+Post install/upgrade recommendations and suggestions for Fedora Silverblue or `ostree` based Fedora (such as Kinoite).
+
+> [!IMPORTANT]
+> Originally, this repository was in `iaacornus/silverblue_postinstall-upgrade`. It was moved here to unify all of my previous and current works under this name
+
+# Note/ Disclaimer
+
+> [!IMPORTANT]
+> I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
+>
+> Lastly, the command must be first analyzed and given a thought before execution.
+
+> [!WARNING]
+> **NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.**
+
+> [!NOTE]
+> **You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.**
+
+You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https://docs.fedoraproject.org/en-US/fedora-silverblue/_attachments/silverblue-cheatsheet.pdf).
+
+# Table of Contents
+
+Skip to what you need:
 
 - [Fedora Silverblue Setup and Optimizations](#fedora-silverblue-setup-and-optimizations)
 - [Note/ Disclaimer](#note-disclaimer)
+- [Table of Contents](#table-of-contents)
 - [System Update](#system-update)
 - [Install RPMFusion and Other Repos](#install-rpmfusion-and-other-repos)
   - [Flatpak](#flatpak)
@@ -48,26 +71,6 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
     - [Toolbox](#toolbox)
     - [Layering](#layering)
     - [Block Telemetry](#block-telemetry)
-
-***
-
-> [!IMPORTANT]
-> Originally, this repository was in `iaacornus/silverblue_postinstall-upgrade`. It was moved here to unify all of my previous and current works under this name
-
-# Note/ Disclaimer
-
-> [!IMPORTANT]
-> I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
->
-> Lastly, the command must be first analyzed and given a thought before execution.
-
-> [!WARNING]
-> **NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.**
-
-> [!NOTE]
-> **You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.**
-
-You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https://docs.fedoraproject.org/en-US/fedora-silverblue/_attachments/silverblue-cheatsheet.pdf).
 
 ***
 
