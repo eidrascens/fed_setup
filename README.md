@@ -518,6 +518,19 @@ awk \'{print $1*1e-6 " W"}\' /sys/class/power_supply/BAT0/power_now
 
 This reads `/sys/class/power_supply/BAT0/power_now` and converts it to Watts (W). In case of Lunar Lake, one can achieve power consumption to as low as 3.4 W.
 
+## Deep Sleep
+
+> [!IMPORTANT]
+> **Only if your laptop drains fast under `s2idle`**
+
+In some laptop, the battery drains rapidly when suspended under `s2idle`, particularly those with Alder Lake CPUs. One of the workaround is setting the kernel parameters with `mem_sleep_default=deep`. This can be done via `grubby`:
+
+```bash
+rpm-ostree kargs --append-if-missing="mem_sleep_default=deep
+```
+
+Do a reboot, then check it with `cat /sys/power/mem_sleep`, where the `deep` should be enclosed with brackets (`[deep]`).
+
 ## Battery Threshold
 
 I recommend setting battery threshold of at least 80% to decrease wear on the battery. This can be done by echoing the threshold to `/sys/class/power_supply/BAT0/charge_control_end_threshold`. However, this resets every reboot, so it is good idea to make a systemd service for it:
@@ -552,19 +565,6 @@ If it is set to 0, it is disabled, in 1 it is in lowest, and as the number incre
 ```bash
 brightnessctl --device='asus::kbd_backlight' set 3
 ```
-
-## Deep Sleep
-
-> [!IMPORTANT]
-> **Only if your laptop drains fast under `s2idle`**
-
-In some laptop, the battery drains rapidly when suspended under `s2idle`, particularly those with Alder Lake CPUs. One of the workaround is setting the kernel parameters with `mem_sleep_default=deep`. This can be done via `grubby`:
-
-```bash
-rpm-ostree kargs --append-if-missing="mem_sleep_default=deep
-```
-
-Do a reboot, then check it with `cat /sys/power/mem_sleep`, where the `deep` should be enclosed with brackets (`[deep]`).
 
 ***
 
