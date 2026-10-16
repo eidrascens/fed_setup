@@ -157,7 +157,7 @@ rpm-ostree install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 The current RPMFusion installed by the command was version-specific as notable by `$(rpm -E %fedora)` in the command. Thus, rebasing for the next release would be a [problem](https://discussion.fedoraproject.org/t/simplifying-updates-for-rpm-fusion-packages-and-other-packages-shipping-their-own-rpm-repos/30364/23). Fortunately, it can be fixed by installing a "_general_" repo:
 
-```
+```bash
 rpm-ostree update --uninstall rpmfusion-free-release --uninstall rpmfusion-nonfree-release --install rpmfusion-free-release --install rpmfusion-nonfree-release
 ```
 
@@ -194,7 +194,7 @@ It is important to note that `mozilla-openh264` may give a bad performance, depe
 
 For intel (`intel-media-driver`) (_use `libva-intel-driver` for older versions of Intels_) and then the codecs:
 
-```
+```bash
 rpm-ostree install ffmpeg gstreamer1-plugin-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-bad-freeworld gstreamer1-plugins-ugly gstreamer1-vaapi intel-media-driver
 ```
 
@@ -206,7 +206,7 @@ Reboot again.
 
 Check first if you have nvidia card with `/sbin/lspci | grep -e 3D`, it would show you something like this:
 
-```
+```bash
 02:00.0 3D controller: NVIDIA Corporation GP108M [GeForce MX230] (rev a1)
 ```
 
@@ -303,7 +303,7 @@ flatpak search gtk3
 
 The themes directory can also be overriden depending on how the theme was installed:
 
-```
+```bash
 # choose one, you can do all of them but I don't recommend doing it
 
 # if installed in home dir
@@ -323,7 +323,7 @@ In some cases, where themes do not apply, especially in GTK4, it can be forced b
 > [!WARNING]
 > Do not copy and execute the command, replace `<theme-name>` with the name of the theme
 
-```
+```bash
 echo "export GTK_THEME=<theme-name>" >> $HOME/.profile;                         \
 if [ ! -d $HOME/.config/environment.d/ ];                                       \
 then mkdir -p $HOME/.config/environment.d/; fi;                                 \
@@ -467,7 +467,6 @@ In Fedora Silverblue, the `crypttab` (`/etc/crypttab`) is not passed into the `i
 # this enables discard for all
 rpm-ostree kargs --append-if-missing=rd.luks.options=discard
 # for specific
-```bashq
 rpm-ostree kargs --append-if-missing=rd.luks.options=<LUKS-UUID>=discard
 ```
 
@@ -718,7 +717,7 @@ touch $HOME/.local/share/applications/code.desktop
 
 Finally, append the following lines of code to create a desktop entry:
 
-```bash
+```
 [Desktop Entry]
 Type=Application
 Version=1.0 # you can replace the version
@@ -754,8 +753,10 @@ VSCode contains telemetry, to block some of them block some of the domain in you
 
 Then in `$HOME/.config/Code/User/settings.json`, include:
 
-```
+```json
 "telemetry.telemetryLevel": "off"
+```
+
 # Tips and Tricks
 
 ## Compare and Contrast
