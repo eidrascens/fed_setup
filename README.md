@@ -411,6 +411,10 @@ Quoting [Arch Wiki](https://wiki.archlinux.org/title/Dm-crypt/Specialties#Disabl
 
 In my setup, the encrypted partition is `/dev/nvme0n1p3`. This can be verified with `sudo cryptsetup isLuks /dev/<DEV> && echo SUCCESS` where device is the device name, e.g. `nvme0n1p3`, it should echo `SUCCESS` if the given partition is encrypted. Once confirmed, obtain the device name with:
 
+> [!WARNING]
+> `<UUID>`, `<UID>`, and `<LUKS-UUID>` are placeholders and must be replaced.
+
+
 ```bash
 sudo dmsetup info luks-<UUID>
 ```
