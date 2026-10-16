@@ -74,7 +74,9 @@ Skip to what you need:
 
 ***
 
-# System Update
+# Update the System
+
+## Update Base Image
 
 After booting the system, GNOME Software will automatically download updates of your system. Hence, running `rpm-ostree upgrade` after boot would only give `stderr`. You can wait and reboot later, though usually GNOME gives notifications after the update. Although you can its status with:
 
@@ -93,11 +95,15 @@ rpm-ostree upgrade --check
 rpm-ostree upgrade --preview
 ```
 
+## Update Preinstalled Flatpaks
+
 Update your preinstalled flatpaks, this may also not be necessary, since this is automatically updated by GNOME software center, but if you want to be sure, do:
 
 ```bash
 flatpak update
 ```
+
+## Update Firmwares
 
 It is also !important to update your firmware using `fwupdmgr`:
 
@@ -113,11 +119,11 @@ Reboot. You can also reboot later on.
 
 ***
 
-# Install RPMFusion and Other Repos
+# Manage Repositories
 
 Note that some of the drivers may come preinstalled in your system, confirm before proceeding.
 
-## Flatpak
+## Flathub
 
 Fedora has its own flatpak repository where it filters some of the applications, for access to flathub setup the flathub repository:
 
@@ -166,9 +172,9 @@ sudo sed -i 's/enabled=1/enabled=0/' \
 
 Although you may want to enable `fedora-cisco-openh264`.
 
-## Codecs
+# Codecs
 
-### Thumbnail Support
+## Thumbnail Support
 
 Unfortunately, perhaps due to legal/patent reasons, `ffmpeg` is not included by default. Currently, as the time of this writing, `ffmpeg` conflicts with several free alternatives. Thus, to install `ffmpeg`, which is needed for `.mp4` thumbnail support and other things, you need to override some base image packages:
 
@@ -180,7 +186,7 @@ Then, install `ffmpegthumbnailer` and `libavcodec-freeworld`.
 
 It is important to note that `mozilla-openh264` may give a bad performance, depending on the setup. As an alternative, [u/DelusionalSocialist](https://www.reddit.com/user/DelusionalSocialist/), suggested to use `ffmpeg-libs` which can solve the problem. `ffmpeg-libs` comes from the nonfree repo and can be installed with `rpm-ostree`.
 
-### GStreamer
+## GStreamer
 
 For intel (`intel-media-driver`) (_use `libva-intel-driver` for older versions of Intels_) and then the codecs:
 
@@ -192,7 +198,7 @@ For AMD users, refer [here](https://rpmfusion.org/Howto/OSTree)
 
 Reboot again.
 
-## NVidia Drivers
+# NVidia Drivers
 
 Check first if you have nvidia card with `/sbin/lspci | grep -e 3D`, it would show you something like this:
 
@@ -339,7 +345,7 @@ sudo flatpak override --system --env=GTK_THEME='<theme-name>'
 
 ***
 
-# System Optimizations
+# System-Wide Changes and Optimizations
 
 ## Replace RPM Firefox with Flatpak
 
@@ -508,7 +514,7 @@ This can be achieved by appending `intel_pstate=passive` to the Kernel arguments
 rpm-ostree kargs --append-if-missing=intel_pstate=passive
 ```
 
-### Checking Battery Consumption
+## Checking Battery Consumption
 
 There are several tools that can be installed to check the power consumption on your machine. However, for those who does not like to layer additional software like me:
 
