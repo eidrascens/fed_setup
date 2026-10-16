@@ -258,6 +258,23 @@ sudo flatpak override --system --reset
 ```
 
 The `--system` flag can also be omitted and `--user` can be used for user-wide changes.
+1. Calculator `org.gnome.Calculator`
+2. Calendar `org.gnome.Calendar`
+3. Connections `org.gnome.Connections`
+4. Characters `org.gnome.Characters`
+5. Contacts `org.gnome.Contacts`
+6. Extensions `org.gnome.Extensions`
+8. Logs `org.gnome.Logs`
+9. Loupe `org.gnome.Loupe`
+10. Maps `org.gnome.Maps`
+11. Nautilus Previewer `org.gnome.NautilusPreviewer`
+12. Papers `org.gnome.Papers`
+13. Snapshot `org.gnome.Snapshot`
+14. Texteditor `org.gnome.TextEditor`
+15. Weather `org.gnome.Weather`
+16. Disk Usage Analyzer `org.gnome.baobab`
+17. Clocks `org.gnome.clocks`
+18. Font Viewer `org.gnome.font-viewer`
 
 ## Replace Fedora Flatpaks
 
