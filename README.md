@@ -5,8 +5,6 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 - [Fedora Silverblue Setup and Optimizations](#fedora-silverblue-setup-and-optimizations)
 - [Note/ Disclaimer](#note-disclaimer)
 - [System Update](#system-update)
-- [Mount External Drives](#mount-external-drives)
-  - [Automatically Mount](#automatically-mount)
 - [Install RPMFusion and Other Repos](#install-rpmfusion-and-other-repos)
   - [Flatpak](#flatpak)
   - [RPMFusion](#rpmfusion)
@@ -44,11 +42,12 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 - [Tips and Tricks](#tips-and-tricks)
   - [Compare and Contrast](#compare-and-contrast)
 - [Miscellaneous](#miscellaneous)
-  - [VSCode](#vscode)
-    - [Install](#install)
-      - [Toolbox](#toolbox)
-      - [Layering](#layering)
-  - [Block Telemetry](#block-telemetry)
+  - [Mount External Drives](#mount-external-drives)
+    - [Automatically Mount](#automatically-mount)
+  - [Install VSCode](#install-vscode)
+    - [Toolbox](#toolbox)
+    - [Layering](#layering)
+    - [Block Telemetry](#block-telemetry)
 
 ***
 
@@ -108,46 +107,6 @@ sudo fwupdmgr update
 ```
 
 Reboot. You can also reboot later on.
-
-***
-
-# Mount External Drives
-
-Some of the external drives will not be automatically mounted by the system if it was not mounted/specified during the installation.
-
-External drives, along with its `UUID` (Universally Unique Identifier), can be found using `fdisk -l` and be mounted using:
-
-```bash
-sudo mount /dev/sdX <dir>
-# replace <dir> where you want to mount the drive
-# sdx can be nvmeNnJpI where N, J and I are integers
-# e.g. /dev/nvme0n1p1, they can also be /dev/sdb
-```
-
-## Automatically Mount
-
-External drives can be automatically mounted on boot by including it into `/etc/fstab`.
-
-Firstly, you need to obtain the `UUID` of the drive and make sure its mount point exists. You can find the drives and their corresponding `UUID` with `lsblk -f` or `fdisk -l`. Then, add it to `/etc/fstab` with format of:
-
-```bash
-UUID    mount_point     type    options     dump    fsck
-```
-
-Below is an example, **DO NOT COPY AND PASTE**:
-
-```
-# Ignore the comments, this is and example to fstab entry, don't copy and paste this, your system won't boot
-# UUID                                      # mount point (full), also  # filesystem format   # options # dump # fsck
-#                                           # no env variables such as
-#                                           # $HOME
-# UUID=e423cfe8-5e8a-419c-87d0-8abb39aa498c /var/home/iaacornus/Storage ext4               defaults 0       0
-# UUID=<your device uuid>                   <mount point>               <filesystem format> <options> <dump>  <fsck>
-```
-
-Instead of using `<device>`, it is highly recommended to use the `UUID` instead. Moreover, I strongly encourage to use `defaults` for `options`, `0` for `dump` and `fsck` to disable the checking (increasing the boot time, and avoiding potential errors, and since you only do checking if the drive is part of the OS filesystem), refer to [ArchWiki - fstab](https://wiki.archlinux.org/title/fstab).
-
-Finally, check `/etc/fstab` with `cat /etc/fstab`. Be sure to input the correct UUID and options, otherwise your system won't boot.
 
 ***
 
@@ -664,6 +623,44 @@ sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/nu
 ***
 
 # Miscellaneous
+
+## Mount External Drives
+
+Some of the external drives will not be automatically mounted by the system if it was not mounted/specified during the installation.
+
+External drives, along with its `UUID` (Universally Unique Identifier), can be found using `fdisk -l` and be mounted using:
+
+```bash
+sudo mount /dev/sdX <dir>
+# replace <dir> where you want to mount the drive
+# sdx can be nvmeNnJpI where N, J and I are integers
+# e.g. /dev/nvme0n1p1, they can also be /dev/sdb
+```
+
+### Automatically Mount
+
+External drives can be automatically mounted on boot by including it into `/etc/fstab`.
+
+Firstly, you need to obtain the `UUID` of the drive and make sure its mount point exists. You can find the drives and their corresponding `UUID` with `lsblk -f` or `fdisk -l`. Then, add it to `/etc/fstab` with format of:
+
+```bash
+UUID    mount_point     type    options     dump    fsck
+```
+
+Below is an example, **DO NOT COPY AND PASTE**:
+
+```
+# Ignore the comments, this is and example to fstab entry, don't copy and paste this, your system won't boot
+# UUID                                      # mount point (full), also  # filesystem format   # options # dump # fsck
+#                                           # no env variables such as
+#                                           # $HOME
+# UUID=e423cfe8-5e8a-419c-87d0-8abb39aa498c /var/home/iaacornus/Storage ext4               defaults 0       0
+# UUID=<your device uuid>                   <mount point>               <filesystem format> <options> <dump>  <fsck>
+```
+
+Instead of using `<device>`, it is highly recommended to use the `UUID` instead. Moreover, I strongly encourage to use `defaults` for `options`, `0` for `dump` and `fsck` to disable the checking (increasing the boot time, and avoiding potential errors, and since you only do checking if the drive is part of the OS filesystem), refer to [ArchWiki - fstab](https://wiki.archlinux.org/title/fstab).
+
+Finally, check `/etc/fstab` with `cat /etc/fstab`. Be sure to input the correct UUID and options, otherwise your system won't boot.
 
 ## VSCode
 
