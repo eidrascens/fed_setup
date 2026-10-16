@@ -214,29 +214,6 @@ Finally, check your NVidia install with `modinfo -F version nvidia`, it should g
 
 Flatpak apps are sandboxed. Thus, may not work as expected. The following are some solutions to the errors that may arise from default Flatpak security permissions.
 
-## Theming
-
-There are 2 methods to installing themes: Either the flatpak version of GTK theme you are using as a flatpak, which you can find by using `search`:
-
-```bash
-flatpak search gtk3
-```
-
-The themes directory can also be overriden depending on how the theme was installed:
-
-```
-# choose one, you can do all of them but I don't recommend doing it
-
-# if installed in home dir
-sudo flatpak override --system --filesystem=$HOME/.themes # if installed in home dir
-
-# if layered in image
-sudo flatpak override --system --filesystem=/usr/share/themes
-
-# or whatever
-sudo flatpak override --system --filesystem=xdg-data/themes
-```
-
 ## Permissions
 
 Other reddit users suggested, such as [u/IceOleg](https://www.reddit.com/user/IceOleg/), you can remove permissions for access to `$HOME` and `host` dir with:
@@ -291,6 +268,32 @@ These can be reinstalled, and some can be replaced with its new counterpart with
 
 ```bash
 flatpak install flathub org.gnome.Calculator org.gnome.Calendar org.gnome.Characters org.gnome.Connections org.gnome.Contacts org.gnome.Extensions org.gnome.Logs org.gnome.Loupe org.gnome.Maps org.gnome.NautilusPreviewer org.gnome.Papers org.gnome.Snapshot org.gnome.TextEditor org.gnome.Weather org.gnome.baobab org.gnome.clocks org.gnome.font-viewer
+```
+
+## Theming
+
+There are 2 methods to installing themes: Either the flatpak version of GTK theme you are using as a flatpak, which you can find by using `search`:
+
+```bash
+flatpak search gtk3
+```
+
+The themes directory can also be overriden depending on how the theme was installed:
+
+```
+# choose one, you can do all of them but I don't recommend doing it
+
+# if installed in home dir
+sudo flatpak override --system --filesystem=$HOME/.themes # if installed in home dir
+
+# if layered in image
+sudo flatpak override --system --filesystem=/usr/share/themes
+
+# or whatever
+sudo flatpak override --system --filesystem=xdg-data/themes
+```
+
+### Theming Extended
 
 In some cases, where themes do not apply, especially in GTK4, it can be forced by including it in `$HOME/.profile`, as well as the settings (`settings.ini`):
 
