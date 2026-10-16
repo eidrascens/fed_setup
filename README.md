@@ -259,7 +259,18 @@ sudo flatpak override --system --reset
 
 The `--system` flag can also be omitted and `--user` can be used for user-wide changes.
 
-## Theming Extended
+## Replace Fedora Flatpaks
+
+By default, Silverblue comes with flatpak applications installed from Fedora's flatpak repositories. These can be removed with:
+
+```bash
+flatpak uninstall --all --system --delete-data --assumeyes
+```
+
+These can be reinstalled, and some can be replaced with its new counterpart with the command:
+
+```bash
+flatpak install flathub org.gnome.Calculator org.gnome.Calendar org.gnome.Characters org.gnome.Connections org.gnome.Contacts org.gnome.Extensions org.gnome.Logs org.gnome.Loupe org.gnome.Maps org.gnome.NautilusPreviewer org.gnome.Papers org.gnome.Snapshot org.gnome.TextEditor org.gnome.Weather org.gnome.baobab org.gnome.clocks org.gnome.font-viewer
 
 In some cases, where themes do not apply, especially in GTK4, it can be forced by including it in `$HOME/.profile`, as well as the settings (`settings.ini`):
 
