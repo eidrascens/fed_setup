@@ -238,6 +238,17 @@ sudo flatpak override --system --reset
 ```
 
 The `--system` flag can also be omitted and `--user` can be used for user-wide changes.
+
+## Unnecessary Flatpaks
+
+There are also some preinstalled flatpak that you can safely remove. You can completely remove the flatpak with:
+
+```bash
+flatpak uninstall --system --delete-data <app>
+```
+
+Here are some you can remove:
+
 1. Calculator `org.gnome.Calculator`
 2. Calendar `org.gnome.Calendar`
 3. Connections `org.gnome.Connections`
@@ -255,6 +266,8 @@ The `--system` flag can also be omitted and `--user` can be used for user-wide c
 16. Disk Usage Analyzer `org.gnome.baobab`
 17. Clocks `org.gnome.clocks`
 18. Font Viewer `org.gnome.font-viewer`
+
+To remove all of this, refer to the section below.
 
 ## Replace Fedora Flatpaks
 
@@ -359,30 +372,6 @@ sudo systemctl disable NetworkManager-wait-online.service
 Masking it is not recommend, since as explained by [u/chrisawi](https://www.reddit.com/user/chrisawi/):
 
 > Also, wait-online services are `WantedBy=network-online.target`, so they do nothing unless another service explicitly pulls that target in because it can't handle starting before the network is up. The nfs services are a typical example, see: `systemctl list-dependencies --reverse network-online.target`. It might be better to disable such services than to leave them potentially broken.
-
-## Unnecessary Flatpaks
-
-There are also some preinstalled flatpak that you can safely remove. You can completely remove the flatpak with:
-
-```bash
-flatpak uninstall --system --delete-data <app>
-# example
-flatpak uninstall --system --delete-data org.gnome.Calculator
-```
-
-Here are some you can remove:
-
-1. Calculator `org.gnome.Calculator`
-2. Calendar `org.gnome.Calendar`
-3. Connections `org.gnome.Connections`
-4. Contacts `org.gnome.Contacts`
-5. Evince `org.gnome.Evince`
-6. Logs `org.gnome.Logs`
-7. Maps `org.gnome.Maps`
-8. Weather apps `org.gnome.Weather`
-9. Disk usage analyzer `org.gnome.baobab`
-
-<!--todo: # Replace Fedora Flatpaks -->
 
 ## Disable GNOME Software
 
