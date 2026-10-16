@@ -66,8 +66,6 @@ Skip to what you need:
     - [Install FISH](#install-fish)
     - [Default Shell](#default-shell)
     - [Customize FISH](#customize-fish)
-- [Tips and Tricks](#tips-and-tricks)
-  - [Compare and Contrast](#compare-and-contrast)
 - [Miscellaneous](#miscellaneous)
   - [Mount External Drives](#mount-external-drives)
     - [Automatically Mount](#automatically-mount)
@@ -75,10 +73,14 @@ Skip to what you need:
     - [Toolbox](#toolbox)
     - [Layering](#layering)
     - [Block Telemetry](#block-telemetry)
+- [Tips and Tricks](#tips-and-tricks)
+  - [Compare and Contrast](#compare-and-contrast)
 
 ***
 
 # Update the System
+
+<details>
 
 ## Update Base Image
 
@@ -121,9 +123,13 @@ sudo fwupdmgr update
 
 Reboot. You can also reboot later on.
 
+</details>
+
 ***
 
 # Manage Repositories
+
+<details>
 
 Note that some of the drivers may come preinstalled in your system, confirm before proceeding.
 
@@ -176,7 +182,11 @@ sudo sed -i 's/enabled=1/enabled=0/' \
 
 Although you may want to enable `fedora-cisco-openh264`.
 
+</details>
+
 # Codecs
+
+<details>
 
 ## Thumbnail Support
 
@@ -202,7 +212,11 @@ For AMD users, refer [here](https://rpmfusion.org/Howto/OSTree)
 
 Reboot again.
 
+</details>
+
 # NVidia Drivers
+
+<details>
 
 Check first if you have nvidia card with `/sbin/lspci | grep -e 3D`, it would show you something like this:
 
@@ -218,9 +232,13 @@ rpm-ostree install akmod-nvidia
 
 Finally, check your NVidia install with `modinfo -F version nvidia`, it should give the version number of your driver such as `510.60.02`, not `stderr`.
 
+</details>
+
 ***
 
 # Flatpak Modifications
+
+<details>
 
 Flatpak apps are sandboxed. Thus, may not work as expected. The following are some solutions to the errors that may arise from default Flatpak security permissions.
 
@@ -318,6 +336,8 @@ sudo flatpak override --system --filesystem=xdg-data/themes
 
 ### Theming Extended
 
+<details>
+
 In some cases, where themes do not apply, especially in GTK4, it can be forced by including it in `$HOME/.profile`, as well as the settings (`settings.ini`):
 
 > [!WARNING]
@@ -346,10 +366,15 @@ And append `GTK_THEME=<theme-name>` at the end of the `gtk_theme.conf`; append `
 ```bash
 sudo flatpak override --system --env=GTK_THEME='<theme-name>'
 ```
+</details>
+
+</details>
 
 ***
 
 # System-Wide Changes and Optimizations
+
+<details>
 
 ## Replace RPM Firefox with Flatpak
 
@@ -392,6 +417,8 @@ sudo rm /etc/xdg/autostart/org.gnome.Software.desktop
 ```
 
 ## SSD Related Optimizations
+
+<details>
 
 If you will proceed in this part, you need to obtain your device's unique identifier (`UID`). A `UID` is unique in each of your blocks/devices. You can find your partition/block/device's `UID` with `lsblk -p` or `fdisk -l`:
 
@@ -480,6 +507,8 @@ By default, the BTRFS subvolumes/volumes in Fedora Silverblue is mounted as `rel
 sudo sed -i 's/compress=zstd:1/noatime,compress=zstd:1/' /etc/fstab
 ```
 
+</details>
+
 ## Removable Base Image Packages
 
 > [!IMPORTANT]
@@ -493,9 +522,13 @@ rpm-ostree override remove open-vm-tools-desktop open-vm-tools qemu-guest-agent 
 
 Later on, before rebasing this needs to be included back, which can be done with `rpm-ostree override reset`.
 
+</details>
+
 ***
 
 # Laptop Users
+
+<details>
 
 ## Set `intel_pstate=passive` for Improved Battery Life
 
@@ -575,9 +608,13 @@ If it is set to 0, it is disabled, in 1 it is in lowest, and as the number incre
 brightnessctl --device='asus::kbd_backlight' set 3
 ```
 
+</details>
+
 ***
 
 # Customizations
+
+<details>
 
 ## Use FISH
 
@@ -639,13 +676,13 @@ This will give a GUI where you can set your prompt, color of syntax highlighting
 set -U fish_greeting
 ```
 
-***
-
-
+</details>
 
 ***
 
 # Miscellaneous
+
+<details>
 
 ## Mount External Drives
 
@@ -757,7 +794,11 @@ Then in `$HOME/.config/Code/User/settings.json`, include:
 "telemetry.telemetryLevel": "off"
 ```
 
+</details>
+
 # Tips and Tricks
+
+<details>
 
 ## Compare and Contrast
 
@@ -774,3 +815,5 @@ You can also utilize `diff` to obtain a more elaborate report:
 ```bash
 sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/null
 ```
+
+</details>
