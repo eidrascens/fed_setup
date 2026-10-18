@@ -7,16 +7,16 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 
 # Note/ Disclaimer
 
-> [!IMPORTANT]
+> [!NOTE]
 > I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
 >
 > Lastly, the command must be first analyzed and given a thought before execution.
 
 > [!WARNING]
-> **NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.**
+> NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.
 
 > [!NOTE]
-> **You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.**
+> You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.
 
 You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https://docs.fedoraproject.org/en-US/fedora-silverblue/_attachments/silverblue-cheatsheet.pdf).
 
@@ -155,7 +155,7 @@ rpm-ostree install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 ### Reinstall Unversioned RPMFusion
 
-> [!NOTE]
+> [!CAUTION]
 > This should only be done after installing the versioned RPMFusion (see above) and rebooting. Otherwise, this will yield errors.
 
 The current RPMFusion installed by the command was version-specific as notable by `$(rpm -E %fedora)` in the command. Thus, rebasing for the next release would be a [problem](https://discussion.fedoraproject.org/t/simplifying-updates-for-rpm-fusion-packages-and-other-packages-shipping-their-own-rpm-repos/30364/23). Fortunately, it can be fixed by installing a "_general_" repo:
@@ -259,6 +259,9 @@ sudo flatpak override --system --reset
 The `--system` flag can also be omitted and `--user` can be used for user-wide changes.
 
 ## Unnecessary Flatpaks
+
+> [!CAUTION]
+> Only do this if your storage space is sufficiently low. Otherwise, this yields little to no benefits.
 
 There are also some preinstalled flatpak that you can safely remove. You can completely remove the flatpak with:
 
@@ -470,7 +473,7 @@ Flags:        no-read-workqueue no-write-workqueue
 
 ### Enable Discard
 
-> [!NOTE]
+> [!CAUTION]
 > Due to [security implications](https://asalor.blogspot.com/2011/08/trim-dm-crypt-problems.html), `discard` option is not enabled by default. However, for majority it should not be significant. Thus, the performance improvement(s) outweight(s) the security concern(s).
 
 In Fedora Silverblue, the `crypttab` (`/etc/crypttab`) is not passed into the `intramfs` images. But you can enable discard by passing it as kernel arguments using `rpm-ostree kargs --append-if-missing`:
@@ -495,8 +498,8 @@ sudo sed -i 's/compress=zstd:1/noatime,compress=zstd:1/' /etc/fstab
 
 ## Removable Base Image Packages
 
-> [!IMPORTANT]
-> **This needs to be reset before you can rebase to another version, e.g. 36 -> 37, refer [here](https://github.com/fedora-silverblue/issue-tracker/issues/288)**
+> [!CAUTION]
+> This yields little to no benefit, and may become problematic. Only do if you know what you are achieving. Additionally, this needs to be reset before you can rebase to another version, _e.g._ 36 -> 37, refer [here](https://github.com/fedora-silverblue/issue-tracker/issues/288) for more information.
 
 [u/VVine6](https://www.reddit.com/user/VVine6/) recommended some packages that can be removed from the base image, such as VM host support and GNOME classic shell:
 
@@ -544,8 +547,8 @@ This reads `/sys/class/power_supply/BAT0/power_now` and converts it to Watts (W)
 
 ## Deep Sleep
 
-> [!IMPORTANT]
-> **Only if your laptop drains fast under `s2idle`**
+> [!CAUTION]
+> Only use deep sleep / suspend-on-ram if your laptop drains fast under `s2idle`
 
 In some laptop, the battery drains rapidly when suspended under `s2idle`, particularly those with Alder Lake CPUs. One of the workaround is setting the kernel parameters with `mem_sleep_default=deep`. This can be done via `grubby`:
 
@@ -706,7 +709,8 @@ There are three ways to install via flatpak, toolbox or layering.
 
 ### Toolbox
 
-**This section assumes that you will use Fedora as toolbox container**
+> [!NOTE]
+> This section assumes that you will use Fedora as toolbox container
 
 Create a toolbox with `toolbox create`, you can specify the version or distro you want to use with `-r` and `-d`, respectively. Then go inside the toolbox and update the system:
 
