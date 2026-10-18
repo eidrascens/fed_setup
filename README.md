@@ -182,15 +182,11 @@ Although you may want to enable `fedora-cisco-openh264`.
 
 ## Thumbnail Support
 
-Unfortunately, perhaps due to legal/patent reasons, `ffmpeg` is not included by default. Currently, as the time of this writing, `ffmpeg` conflicts with several free alternatives. Thus, to install `ffmpeg`, which is needed for `.mp4` thumbnail support and other things, you need to override some base image packages:
+Unfortunately, perhaps due to legal/patent reasons, `ffmpeg` is not included by default. You can install `ffmpegthumbnailer` to enable thumbnail support with:
 
 ```bash
-rpm-ostree override remove libavdevice-free libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free ffmpeg-free --install ffmpeg --uninstall libavcodec-freeworld
+rpm-ostree install ffmpegthumbnailer
 ```
-
-Then, install `ffmpegthumbnailer` and `libavcodec-freeworld`.
-
-It is important to note that `mozilla-openh264` may give a bad performance, depending on the setup. As an alternative, [u/DelusionalSocialist](https://www.reddit.com/user/DelusionalSocialist/), suggested to use `ffmpeg-libs` which can solve the problem. `ffmpeg-libs` comes from the nonfree repo and can be installed with `rpm-ostree`.
 
 ## GStreamer
 
