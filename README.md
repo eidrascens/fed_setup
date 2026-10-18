@@ -296,13 +296,13 @@ flatpak install flathub org.gnome.Calculator org.gnome.Calendar org.gnome.Charac
 
 ## Theming
 
-There are 2 methods to installing themes: Either the flatpak version of GTK theme you are using as a flatpak, which you can find by using `search`:
+One of the easiet approach to theme Flatpak applications is to install the flatpak version of GTK theme you are using, which you can find by using `search`:
 
 ```bash
 flatpak search gtk3
 ```
 
-The themes directory can also be overriden depending on how the theme was installed:
+Then you can install the said theme with `flatpak install flathub <theme_name>`. Another approach is by providing access to directories where the theme was installed, which depends on how it was installed:
 
 ```bash
 # choose one, you can do all of them but I don't recommend doing it
