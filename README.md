@@ -386,7 +386,7 @@ Masking it is not recommend, since as explained by [u/chrisawi](https://www.redd
 
 ## Disable GNOME Software
 
-GNOME Software launches automatically starts up after boot. This takes at least 100MB of RAM up to 900MB (anecdotally). You can prevent GNOME Software from autostart by removing `/etc/xdg/autostart/org.gnome.Software.desktop`:
+GNOME Software launches automatically starts up after boot. This takes at least 100MB of RAM up to 900 MB (anecdotally). You can prevent GNOME Software from autostart by removing `/etc/xdg/autostart/org.gnome.Software.desktop`:
 
 ```bash
 sudo rm /etc/xdg/autostart/org.gnome.Software.desktop
