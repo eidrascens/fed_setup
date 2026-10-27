@@ -733,6 +733,80 @@ set -U fish_greeting
 
 ## Protection Against BadUSBs
 
+> ![NOTE]
+> BadUSBs are not as common as one thinks. Consider your threat model
+> before proceeding. An extra layer of moderate security is not bad, either.
+
+There are many ways to attack a person digitally; some uses common forms
+such as worms and malwares, phishing, and *etc*; some uses advanced forms
+such as [BadUSBs](https://www.nccgroup.com/research/the-facts-about-badusb/).
+USB-based attacks can be mitigated by not plugging USBs,or by disabling
+the USB ports altogether in the UEFI/BIOS. Which is too much depends on
+your threat model. For those that uses USB or pluggable-devices, however,
+a compromise can be made.
+
+[USBGuard](https://usbguard.github.io/) offers a mechanism to whitelist
+or blacklist USB-devices. This can be installed with
+
+```bash
+rpm-ostree install usbguard usbguard-selinux usbguard-notifier
+```
+
+After rebooting, plugin all of your trusted USB devices that you will be
+using often such that it can be whitelisted during the policy generation
+for USBGuard. Thereafter, generate the policy with
+
+```bash
+#!/usr/bin/bash
+
+run0 sh -c '
+        mkdir --parents --mode=755 --context=system_u:object_r:usbguard_conf_t:s0 /etc/usbguard
+        mkdir --parents --mode=755 --context=system_u:object_r:usbguard_log_t:s0  /var/log/usbguard
+        usbguard generate-policy > /etc/usbguard/rules.conf
+        sed -i "/IPCAllowedGroups=wheel/s/$/ usbguard/" /etc/usbguard/usbguard-daemon.conf
+        systemctl enable --now usbguard.service
+        usbguard add-user $1
+    ' -- $USER
+
+systemctl enable --user --now usbguard-notifier.service
+```
+
+> Code was from `@boredsquirrel` in [Fedora Discussion forum](https://discussion.fedoraproject.org/t/howto-setup-usbguard-to-protect-yourself-from-malicious-usb-devices/143343)
+
+This will generate a policy that will allow all your plugged in device
+and block everything else. For those "everything else," every time those
+will be plugged in, a notification will be delivered asking whether to
+allow or block the plugged in device. Note that the permission is only
+temporary.
+
+![](./assets/usbguard_notif.png)
+
+You can grant a permanent permission with
+
+```bash
+usbguard allow-device -p <ID>
+```
+
+The `<ID>` can be found by listing the blocked devices using the command
+
+```bash
+usbguard list-devices | grep block
+```
+
+Which will output something like:
+
+```
+20: block id 0781:5581 serial "0401e9cac5727fd4d16fb489b16ea01201ff9b34795d710cb0d5435d866f7a7727850000000000000000000022d7c03b0005251881558107442c2d23" name " SanDisk 3.2Gen1" hash "TVNid9QZgAvnXHuMKeQwq1Is3vXssEkrzvAMsH350Wk=" parent-hash "E8Zs26CP5+JQoiPVmDSuTb4j11VatW+WHlWxiX8+qJc=" via-port "4-1" with-interface 08:06:50 with-connect-type "hotplug"
+```
+
+The `<ID>` for the blocked device in the example is `0781:5581`. Moreover,
+you can also allow *everything* by setting the `ImplicitPolicyTarget` to
+allow using the command
+
+```bash
+usbguard set-parameter ImplicitPolicyTarget allow
+```
+
 ## Mount External Drives
 
 Some of the external drives will not be automatically mounted by the system if it was not mounted/specified during the installation.
