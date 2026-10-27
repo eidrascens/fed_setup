@@ -61,6 +61,9 @@ Skip to what you need:
   - [Deep Sleep](#deep-sleep)
   - [Battery Threshold](#battery-threshold)
   - [Keyboard Backlight](#keyboard-backlight)
+- [Tips and Tricks](#tips-and-tricks)
+  - [Revert to Previous Version](#revert-to-previous-version)
+  - [Compare and Contrast](#compare-and-contrast)
 - [Miscellaneous](#miscellaneous)
   - [Use FISH](#use-fish)
     - [Install FISH](#install-fish)
@@ -68,9 +71,6 @@ Skip to what you need:
     - [Customize FISH](#customize-fish)
   - [Mount External Drives](#mount-external-drives)
     - [Automatically Mount](#automatically-mount)
-- [Tips and Tricks](#tips-and-tricks)
-  - [Revert to Previous Version](#revert-to-previous-version)
-  - [Compare and Contrast](#compare-and-contrast)
 
 ***
 
@@ -574,6 +574,90 @@ brightnessctl --device='asus::kbd_backlight' set 3
 
 ***
 
+# Tips and Tricks
+
+## Revert to Previous Version
+
+There are cases where an update introduces some unwanted behavior—not
+necessarily "brick"-ing changes—but something that can be irritating.
+
+> [!TIP]
+> Prevention is better than cure: before updating, always pin the current
+> and working image with
+> ```bash
+> sudo ostree admin pin <index>
+> ```
+> Replace the `<index>` with an integer denoting the position of your
+> current deployment (0-based).
+
+Reverting to older deployment or image fixes such issues. However, if
+you already updated and the previous system image was removed for some
+reason, then that might be a problem. Fortunately, you can retrieve the
+previous deployments / image of your OSTree system, and deploy it.
+
+Get the logs with
+
+```bash
+sudo ostree pull --commit-metadata-only --depth=-1 fedora fedora/<version_num>/x86_64/<variant>
+```
+
+Here, replace the `<version_number>` with the actual version, *e.g.* `44`
+for `44`, and `<variant>` with the actual *variant*, *e.g.* `silverblue`
+for Silverblue, and so forth. This command usually takes a while, about
+2 - 4 (*or more*) minutes. After a successful execution of that command, do
+
+```bash
+ostree log fedora:fedora/<version_num>/x86_64/<variant>
+```
+
+This will output something like this:
+
+```
+commit d1905a1486a1f2cdc97c06fd5c0df25d319a69fc75a59fc55235dba093a55049
+Parent:  f81f0968681aa293d404d70bda2d62b44dba54bff799eb1cceb1d9ac110533bc
+ContentChecksum:  5e9044b541173406bc00ec63caecbe8140693f364da62b8366e15150534b9b80
+Date:  2026-10-27 00:37:35 +0000
+Version: 44.20261027.0
+(no subject)
+```
+
+Then look at the date, or the commit hash. If you can figure the date when
+your previous deployment was released, you can now take the version number
+in `Version`, *e.g.* `44.20261027.0` and deploy it with
+
+```bash
+rpm-ostree deploy 44.20261027.0
+```
+
+However, if you do not know the date, then compare the commit hash to the
+current one with
+
+```bash
+rpm-ostree db diff <prev_commit> <current|new_commit>
+```
+
+You can obtain the `<current_commit>` with `rpm-ostree status`. This will
+show what packages were updated, downgraded, removed, or added. Using that
+information, revert accordingly.
+
+## Compare and Contrast
+
+This can be helpful in debugging as suggested by [u/VVine6](https://www.reddit.com/user/VVine6/)
+
+```bash
+sudo ostree admin config-diff | sort | grep -v system.control
+```
+
+> The output will list files as Removed, Added or Modified. The defaults are available in `/usr/etc` in the very same path, so to revert a modification or a removal simple copy the file over.
+
+You can also utilize `diff` to obtain a more elaborate report:
+
+```bash
+sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/null
+```
+
+***
+
 # Miscellaneous
 
 ## Use FISH
@@ -673,85 +757,3 @@ Below is an example, **DO NOT COPY AND PASTE**:
 Instead of using `<device>`, it is highly recommended to use the `UUID` instead. Moreover, I strongly encourage to use `defaults` for `options`, `0` for `dump` and `fsck` to disable the checking (increasing the boot time, and avoiding potential errors, and since you only do checking if the drive is part of the OS filesystem), refer to [ArchWiki - fstab](https://wiki.archlinux.org/title/fstab).
 
 Finally, check `/etc/fstab` with `cat /etc/fstab`. Be sure to input the correct UUID and options, otherwise your system won't boot.
-
-# Tips and Tricks
-
-## Revert to Previous Version
-
-There are cases where an update introduces some unwanted behavior—not
-necessarily "brick"-ing changes—but something that can be irritating.
-
-> [!TIP]
-> Prevention is better than cure: before updating, always pin the current
-> and working image with
-> ```bash
-> sudo ostree admin pin <index>
-> ```
-> Replace the `<index>` with an integer denoting the position of your
-> current deployment (0-based).
-
-Reverting to older deployment or image fixes such issues. However, if
-you already updated and the previous system image was removed for some
-reason, then that might be a problem. Fortunately, you can retrieve the
-previous deployments / image of your OSTree system, and deploy it.
-
-Get the logs with
-
-```bash
-sudo ostree pull --commit-metadata-only --depth=-1 fedora fedora/<version_num>/x86_64/<variant>
-```
-
-Here, replace the `<version_number>` with the actual version, *e.g.* `44`
-for `44`, and `<variant>` with the actual *variant*, *e.g.* `silverblue`
-for Silverblue, and so forth. This command usually takes a while, about
-2 - 4 (*or more*) minutes. After a successful execution of that command, do
-
-```bash
-ostree log fedora:fedora/<version_num>/x86_64/<variant>
-```
-
-This will output something like this:
-
-```
-commit d1905a1486a1f2cdc97c06fd5c0df25d319a69fc75a59fc55235dba093a55049
-Parent:  f81f0968681aa293d404d70bda2d62b44dba54bff799eb1cceb1d9ac110533bc
-ContentChecksum:  5e9044b541173406bc00ec63caecbe8140693f364da62b8366e15150534b9b80
-Date:  2026-10-27 00:37:35 +0000
-Version: 44.20261027.0
-(no subject)
-```
-
-Then look at the date, or the commit hash. If you can figure the date when
-your previous deployment was released, you can now take the version number
-in `Version`, *e.g.* `44.20261027.0` and deploy it with
-
-```bash
-rpm-ostree deploy 44.20261027.0
-```
-
-However, if you do not know the date, then compare the commit hash to the
-current one with
-
-```bash
-rpm-ostree db diff <prev_commit> <current|new_commit>
-```
-
-You can obtain the `<current_commit>` with `rpm-ostree status`. This will
-show what packages were updated, downgraded, removed, or added. Using that
-information, revert accordingly.
-
-## Compare and Contrast
-
-This can be helpful in debugging as suggested by [u/VVine6](https://www.reddit.com/user/VVine6/)
-
-```bash
-sudo ostree admin config-diff | sort | grep -v system.control
-```
-
-> The output will list files as Removed, Added or Modified. The defaults are available in `/usr/etc` in the very same path, so to revert a modification or a removal simple copy the file over.
-
-You can also utilize `diff` to obtain a more elaborate report:
-
-```bash
-sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/null
-```
