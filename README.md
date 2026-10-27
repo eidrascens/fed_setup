@@ -8,8 +8,14 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 For anyone interested in contributing, see [Contributing](#contributing).
 
 # Note / Disclaimer
-
-
+    
+> [!IMPORTANT]
+> All commands in this repository was tested and used in the personal
+> workstation and setup for quite a while (more than a year) by the owner
+> of this repository. My personal experience notwithstanding, there might
+> still be cases where the experience or result may vary. Proceed with caution
+> and **DO NOT DO ANYTHING YOU DO NOT UNDERSTAND,** instead open an issue
+> and ask away.
 
 > [!WARNING]
 > NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY UNFORESEEABLE OR FORESEEABLE CONSEQUENCES.
@@ -24,7 +30,7 @@ You can get the silverblue cheatsheet of Fedora's Team Silverblue [here](https:/
 Skip to what you need:
 
 - [Fedora Silverblue Setup and Optimizations](#fedora-silverblue-setup-and-optimizations)
-- [Note/ Disclaimer](#note-disclaimer)
+- [Note / Disclaimer](#note--disclaimer)
 - [Table of Contents](#table-of-contents)
 - [Update the System](#update-the-system)
   - [Update Base Image](#update-base-image)
