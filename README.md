@@ -7,7 +7,7 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 
 For anyone interested in contributing, see [Contributing](#contributing).
 
-# Note/ Disclaimer
+# Note / Disclaimer
 
 > [!NOTE]
 > I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
@@ -15,7 +15,7 @@ For anyone interested in contributing, see [Contributing](#contributing).
 > Lastly, the command must be first analyzed and given a thought before execution.
 
 > [!WARNING]
-> NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY FORESEEABLE CONSEQUENCES.
+> NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY UNFORESEEABLE OR FORESEEABLE CONSEQUENCES.
 
 > [!NOTE]
 > You can skip all of the steps, majority are not required, but can be beneficial or can be useful later.
