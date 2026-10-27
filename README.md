@@ -9,10 +9,7 @@ For anyone interested in contributing, see [Contributing](#contributing).
 
 # Note / Disclaimer
 
-> [!NOTE]
-> I highly suggest to avoid layering as much as possible to the system image. Substantial number of layered packages will take a massive toll on system's performance. Consider installing some packages inside of a container or as a flatpak.
->
-> Lastly, the command must be first analyzed and given a thought before execution.
+
 
 > [!WARNING]
 > NEVER RUN A COMMAND FROM INTERNET WITHOUT ANY ANALYSIS AND CONSIDERATION OF ANY UNFORESEEABLE OR FORESEEABLE CONSEQUENCES.
@@ -140,6 +137,11 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 ## RPMFusion
 
 The main repository of Fedora does not contain every applications, some of the codecs are in the RPMFusion, the NVidia drivers are in the nonfree, while some of the codecs are in free.
+
+> [!TIP]
+> Avoid layering to be base image as much as possible. Substantial number
+> of layered packages will take a massive toll on system's performance.
+> Consider installing some packages inside of a container or as a flatpak.
 
 ```bash
 # Nonfree
