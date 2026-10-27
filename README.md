@@ -74,6 +74,7 @@ Skip to what you need:
     - [Layering](#layering)
     - [Block Telemetry](#block-telemetry)
 - [Tips and Tricks](#tips-and-tricks)
+  - [Revert to Previous Version](#revert-to-previous-version)
   - [Compare and Contrast](#compare-and-contrast)
 
 ***
@@ -756,6 +757,69 @@ Then in `$HOME/.config/Code/User/settings.json`, include:
 
 # Tips and Tricks
 
+## Revert to Previous Version
+
+There are cases where an update introduces some unwanted behavior—not
+necessarily "brick"-ing changes—but something that can be irritating.
+
+> [!TIP]
+> Prevention is better than cure: before updating, always pin the current
+> and working image with
+> ```bash
+> sudo ostree admin pin <index>
+> ```
+> Replace the `<index>` with an integer denoting the position of your
+> current deployment (0-based).
+
+Reverting to older deployment or image fixes such issues. However, if
+you already updated and the previous system image was removed for some
+reason, then that might be a problem. Fortunately, you can retrieve the
+previous deployments / image of your OSTree system, and deploy it.
+
+Get the logs with
+
+```bash
+sudo ostree pull --commit-metadata-only --depth=-1 fedora fedora/<version_num>/x86_64/<variant>
+```
+
+Here, replace the `<version_number>` with the actual version, *e.g.* `44`
+for `44`, and `<variant>` with the actual *variant*, *e.g.* `silverblue`
+for Silverblue, and so forth. This command usually takes a while, about
+2 - 4 (*or more*) minutes. After a successful execution of that command, do
+
+```bash
+ostree log fedora:fedora/<version_num>/x86_64/<variant>
+```
+
+This will output something like this:
+
+```
+commit d1905a1486a1f2cdc97c06fd5c0df25d319a69fc75a59fc55235dba093a55049
+Parent:  f81f0968681aa293d404d70bda2d62b44dba54bff799eb1cceb1d9ac110533bc
+ContentChecksum:  5e9044b541173406bc00ec63caecbe8140693f364da62b8366e15150534b9b80
+Date:  2026-10-27 00:37:35 +0000
+Version: 44.20261027.0
+(no subject)
+```
+
+Then look at the date, or the commit hash. If you can figure the date when
+your previous deployment was released, you can now take the version number
+in `Version`, *e.g.* `44.20261027.0` and deploy it with
+
+```bash
+rpm-ostree deploy 44.20261027.0
+```
+
+However, if you do not know the date, then compare the commit hash to the
+current one with
+
+```bash
+rpm-ostree db diff <prev_commit> <current|new_commit>
+```
+
+You can obtain the `<current_commit>` with `rpm-ostree status`. This will
+show what packages were updated, downgraded, removed, or added. Using that
+information, revert accordingly.
 
 ## Compare and Contrast
 
