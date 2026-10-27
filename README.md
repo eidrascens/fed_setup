@@ -61,18 +61,13 @@ Skip to what you need:
   - [Deep Sleep](#deep-sleep)
   - [Battery Threshold](#battery-threshold)
   - [Keyboard Backlight](#keyboard-backlight)
-- [Customizations](#customizations)
+- [Miscellaneous](#miscellaneous)
   - [Use FISH](#use-fish)
     - [Install FISH](#install-fish)
     - [Default Shell](#default-shell)
     - [Customize FISH](#customize-fish)
-- [Miscellaneous](#miscellaneous)
   - [Mount External Drives](#mount-external-drives)
     - [Automatically Mount](#automatically-mount)
-  - [Install VSCode](#install-vscode)
-    - [Toolbox](#toolbox)
-    - [Layering](#layering)
-    - [Block Telemetry](#block-telemetry)
 - [Tips and Tricks](#tips-and-tricks)
   - [Revert to Previous Version](#revert-to-previous-version)
   - [Compare and Contrast](#compare-and-contrast)
@@ -579,7 +574,7 @@ brightnessctl --device='asus::kbd_backlight' set 3
 
 ***
 
-# Customizations
+# Miscellaneous
 
 ## Use FISH
 
@@ -641,10 +636,6 @@ This will give a GUI where you can set your prompt, color of syntax highlighting
 set -U fish_greeting
 ```
 
-***
-
-# Miscellaneous
-
 ## Mount External Drives
 
 Some of the external drives will not be automatically mounted by the system if it was not mounted/specified during the installation.
@@ -657,6 +648,7 @@ sudo mount /dev/sdX <dir>
 # sdx can be nvmeNnJpI where N, J and I are integers
 # e.g. /dev/nvme0n1p1, they can also be /dev/sdb
 ```
+
 ### Automatically Mount
 
 External drives can be automatically mounted on boot by including it into `/etc/fstab`.
@@ -681,79 +673,6 @@ Below is an example, **DO NOT COPY AND PASTE**:
 Instead of using `<device>`, it is highly recommended to use the `UUID` instead. Moreover, I strongly encourage to use `defaults` for `options`, `0` for `dump` and `fsck` to disable the checking (increasing the boot time, and avoiding potential errors, and since you only do checking if the drive is part of the OS filesystem), refer to [ArchWiki - fstab](https://wiki.archlinux.org/title/fstab).
 
 Finally, check `/etc/fstab` with `cat /etc/fstab`. Be sure to input the correct UUID and options, otherwise your system won't boot.
-
-## Install VSCode
-
-There are three ways to install via flatpak, toolbox or layering.
-
-### Toolbox
-
-> [!NOTE]
-> This section assumes that you will use Fedora as toolbox container
-
-Create a toolbox with `toolbox create`, you can specify the version or distro you want to use with `-r` and `-d`, respectively. Then go inside the toolbox and update the system:
-
-```bash
-sudo dnf update
-```
-
-Following VSCode's documentation, import the GPG keys and create a repository:
-
-```bash
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-```
-
-```bash
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-```
-
-Then update the metadata with `sudo dnf check-update`, and do `sudo dnf install code`. To create a desktop icon:
-
-```bash
-touch $HOME/.local/share/applications/code.desktop
-```
-
-Finally, append the following lines of code to create a desktop entry:
-
-```
-[Desktop Entry]
-Type=Application
-Version=1.0 # you can replace the version
-Name=Visual Studio Code
-Exec=toolbox run code
-Icon=com.visualstudio.code
-Terminal=false
-```
-
-If you used a toolbox with different name, change `Exec` to `toolbox --container <name-of-toolbox> run code`.
-
-### Layering
-
-Since the filesystem is immutable, you cannot import the GPG, unless you do specific changes which is not covered here. Thus, simply create a repository for code:
-
-```bash
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-```
-
-Then refresh the metadata with `rpm-ostree refresh-md`, and do `rpm-ostree install code`.
-
-### Block Telemetry
-
-VSCode contains telemetry, to block some of them block some of the domain in your `/etc/hosts` by setting it to loopback (`127.0.0.1`) by appending:
-
-```
-127.0.0.1 dc.services.visualstudio.com
-127.0.0.1 dc.trafficmanager.net
-127.0.0.1 vortex.data.microsoft.com
-127.0.0.1 weu-breeziest-in.cloudapp.net
-127.0.0.1 mobile.events.data.microsoft.com
-```
-
-Then in `$HOME/.config/Code/User/settings.json`, include:
-
-```json
-"telemetry.telemetryLevel": "off"
-```
 
 # Tips and Tricks
 
