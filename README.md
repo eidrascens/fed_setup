@@ -8,7 +8,7 @@ Post install/upgrade recommendations and suggestions for Fedora Silverblue or `o
 For anyone interested in contributing, see [Contributing](#contributing).
 
 # Note / Disclaimer
-    
+
 > [!IMPORTANT]
 > All commands in this repository was tested and used in the personal
 > workstation and setup for quite a while (more than a year) by the owner
@@ -79,7 +79,7 @@ Skip to what you need:
     - [Automatically Mount](#automatically-mount)
 - [Contributing](#contributing)
 
-***
+---
 
 # Update the System
 
@@ -124,11 +124,9 @@ sudo fwupdmgr update
 
 Reboot. You can also reboot later on.
 
-
-***
+---
 
 # Manage Repositories
-
 
 Note that some of the drivers may come preinstalled in your system, confirm before proceeding.
 
@@ -224,7 +222,7 @@ rpm-ostree install akmod-nvidia
 
 Finally, check your NVidia install with `modinfo -F version nvidia`, it should give the version number of your driver such as `510.60.02`, not `stderr`.
 
-***
+---
 
 # Flatpak Modifications
 
@@ -274,17 +272,17 @@ Here are some you can remove:
 4. Characters `org.gnome.Characters`
 5. Contacts `org.gnome.Contacts`
 6. Extensions `org.gnome.Extensions`
-8. Logs `org.gnome.Logs`
-9. Loupe `org.gnome.Loupe`
-10. Maps `org.gnome.Maps`
-11. Nautilus Previewer `org.gnome.NautilusPreviewer`
-12. Papers `org.gnome.Papers`
-13. Snapshot `org.gnome.Snapshot`
-14. Texteditor `org.gnome.TextEditor`
-15. Weather `org.gnome.Weather`
-16. Disk Usage Analyzer `org.gnome.baobab`
-17. Clocks `org.gnome.clocks`
-18. Font Viewer `org.gnome.font-viewer`
+7. Logs `org.gnome.Logs`
+8. Loupe `org.gnome.Loupe`
+9. Maps `org.gnome.Maps`
+10. Nautilus Previewer `org.gnome.NautilusPreviewer`
+11. Papers `org.gnome.Papers`
+12. Snapshot `org.gnome.Snapshot`
+13. Texteditor `org.gnome.TextEditor`
+14. Weather `org.gnome.Weather`
+15. Disk Usage Analyzer `org.gnome.baobab`
+16. Clocks `org.gnome.clocks`
+17. Font Viewer `org.gnome.font-viewer`
 
 To remove all of this, refer to the section below.
 
@@ -356,7 +354,7 @@ And append `GTK_THEME=<theme-name>` at the end of the `gtk_theme.conf`; append `
 sudo flatpak override --system --env=GTK_THEME='<theme-name>'
 ```
 
-***
+---
 
 # System-Wide Changes and Optimizations
 
@@ -422,7 +420,7 @@ NAME                MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 > [!WARNING]
 > There are reported data loss on some and not on others, citing that the code of CloudFlare is buggy. I've tried it myself for about 2 years now (as of this commit), so far I didn't experienced any data loss. Moreover, I didn't encountered complains about it yet from zen kernel users, since zen kernel disabled it by default. But again, it may not be always the case.
 
-Quoting [Arch Wiki](https://wiki.archlinux.org/title/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance):
+Quoting [Arch Wiki](<https://wiki.archlinux.org/title/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance>):
 
 > Solid state drive users should be aware that, by default, discarding internal read and write workqueue commands are not enabled by the device-mapper, i.e. block-devices are mounted without the no_read_workqueue and no_write_workqueue option unless you override the default.
 
@@ -432,7 +430,6 @@ In my setup, the encrypted partition is `/dev/nvme0n1p3`. This can be verified w
 
 > [!WARNING]
 > `<UUID>`, `<UID>`, and `<LUKS-UUID>` are placeholders and must be replaced.
-
 
 ```bash
 sudo dmsetup info luks-<UUID>
@@ -502,7 +499,7 @@ rpm-ostree override remove open-vm-tools-desktop open-vm-tools qemu-guest-agent 
 
 Later on, before rebasing this needs to be included back, which can be done with `rpm-ostree override reset`.
 
-***
+---
 
 # Laptop Users
 
@@ -584,7 +581,7 @@ If it is set to 0, it is disabled, in 1 it is in lowest, and as the number incre
 brightnessctl --device='asus::kbd_backlight' set 3
 ```
 
-***
+---
 
 # Tips and Tricks
 
@@ -596,9 +593,11 @@ necessarily "brick"-ing changes—but something that can be irritating.
 > [!TIP]
 > Prevention is better than cure: before updating, always pin the current
 > and working image with
+>
 > ```bash
 > sudo ostree admin pin <index>
 > ```
+>
 > Replace the `<index>` with an integer denoting the position of your
 > current deployment (0-based).
 
@@ -613,10 +612,10 @@ Get the logs with
 sudo ostree pull --commit-metadata-only --depth=-1 fedora fedora/<version_num>/x86_64/<variant>
 ```
 
-Here, replace the `<version_number>` with the actual version, *e.g.* `44`
-for `44`, and `<variant>` with the actual *variant*, *e.g.* `silverblue`
+Here, replace the `<version_number>` with the actual version, _e.g._ `44`
+for `44`, and `<variant>` with the actual _variant_, _e.g._ `silverblue`
 for Silverblue, and so forth. This command usually takes a while, about
-2 - 4 (*or more*) minutes. After a successful execution of that command, do
+2 - 4 (_or more_) minutes. After a successful execution of that command, do
 
 ```bash
 ostree log fedora:fedora/<version_num>/x86_64/<variant>
@@ -635,7 +634,7 @@ Version: 44.20261027.0
 
 Then look at the date, or the commit hash. If you can figure the date when
 your previous deployment was released, you can now take the version number
-in `Version`, *e.g.* `44.20261027.0` and deploy it with
+in `Version`, _e.g._ `44.20261027.0` and deploy it with
 
 ```bash
 rpm-ostree deploy 44.20261027.0
@@ -668,7 +667,7 @@ You can also utilize `diff` to obtain a more elaborate report:
 sudo diff -yrW200 --suppress-common-lines --color=always /usr/etc /etc 2>/dev/null
 ```
 
-***
+---
 
 # Miscellaneous
 
@@ -734,8 +733,6 @@ set -U fish_greeting
 
 ## Protection Against BadUSBs
 
-
-
 ## Mount External Drives
 
 Some of the external drives will not be automatically mounted by the system if it was not mounted/specified during the installation.
@@ -774,7 +771,7 @@ Instead of using `<device>`, it is highly recommended to use the `UUID` instead.
 
 Finally, check `/etc/fstab` with `cat /etc/fstab`. Be sure to input the correct UUID and options, otherwise your system won't boot.
 
-***
+---
 
 # Contributing
 
